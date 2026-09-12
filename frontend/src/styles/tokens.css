@@ -1,0 +1,55 @@
+:root {
+  /* -- surfaces ------------------------------------------------------- */
+  --canvas: #0a0d12;
+  --canvas-raised: #0d1117;
+  --surface: #10151c;
+  --surface-raised: #141b24;
+  --surface-inset: #0c1015;
+
+  /* -- borders ---------------------------------------------------------*/
+  --border-faint: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-accent: rgba(90, 200, 224, 0.4);
+
+  /* -- text ------------------------------------------------------------*/
+  --text-primary: #e7edf3;
+  --text-secondary: #93a1b0;
+  --text-tertiary: #5c6b7a;
+  --text-disabled: #3d4855;
+
+  /* -- accents -----------------------------------------------------------*/
+  --accent: #5ac8e0;
+  --accent-strong: #8ee0f2;
+  --accent-dim: #2c5560;
+  --accent-wash: rgba(90, 200, 224, 0.08);
+
+  --uncertainty: #e0a458;
+  --uncertainty-wash: rgba(224, 164, 88, 0.1);
+
+  --vegetation: #7cbf6b;
+  --vegetation-wash: rgba(124, 191, 107, 0.1);
+
+  --success: #5fd188;
+  --error: #e2685c;
+  --error-wash: rgba(226, 104, 92, 0.1);
+
+  /* -- typography --------------------------------------------------------*/
+  --font-display: 'Space Grotesk', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+  /* -- geometry --------------------------------------------------------*/
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  color-scheme: dark;
+}

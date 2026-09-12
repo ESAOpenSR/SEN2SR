@@ -1,0 +1,25 @@
+.metadata-grid {
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+  margin: 0;
+}
+
+.metadata-grid__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.metadata-grid__value {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-primary);
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 720px) {
+  .metadata-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}

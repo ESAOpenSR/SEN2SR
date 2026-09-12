@@ -1,0 +1,43 @@
+{
+  "experiment": "baseline-0",
+  "model_name": "SEN2SRLite/NonReference_RGBN_x4",
+  "model_artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+  "model_weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN",
+  "coordinates": {
+    "lat": 39.49152740347753,
+    "lon": -0.4308725142800361
+  },
+  "scene_date_window": {
+    "start": "2023-01-15",
+    "end": "2023-01-16"
+  },
+  "scene_time_index": 0,
+  "scene_timestamp": "2023-01-15T10:54:11.024000000",
+  "bands": [
+    "B04",
+    "B03",
+    "B02",
+    "B08"
+  ],
+  "input_resolution_m": 10.0,
+  "output_resolution_m": 2.5,
+  "scale_factor": 4.0,
+  "input_shape": [
+    4,
+    128,
+    128
+  ],
+  "output_shape": [
+    4,
+    512,
+    512
+  ],
+  "inference_seconds": 0.1553,
+  "peak_gpu_memory_mib": 100.5,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "python_version": "3.11.9",
+  "torch_version": "2.14.0+cu130",
+  "torch_cuda_build": "13.0",
+  "cuda_available": true
+}

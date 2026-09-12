@@ -1,0 +1,360 @@
+{
+  "experiment": "end_to_end (Phase 9) -- the complete FRAME pipeline on the deterministic Baseline 0 scene",
+  "scientific_caveats": [
+    "The SR output is a learned statistical inference resampled onto a 2.5 m pixel grid -- Sentinel-2's finest native band resolution is 10 m, and it has never observed the ground at 2.5 m.",
+    "Uncertainty here is a relative, architecture-conditioned model-stability proxy from test-time perturbation ensembling. It is NOT a calibrated probability of error, NOT a confidence interval, and NOT the upstream LAM explainability tool (sen2sr/xai/lam.py).",
+    "Self-consistency diagnostics compare the SR output against its own LR input only -- not a ground-truth accuracy check.",
+    "NDVI agreement between the native and SR-derived grids measures internal consistency and downstream utility, not proof of physical accuracy -- both are derived from the same underlying 10 m observation, not independent ground truths.",
+    "The Phase 4 opensr-test benchmark (cited below, if available) evaluates against an external, higher-resolution reference from a different sensor/scene -- it is not native Sentinel-2 2.5 m ground truth for this scene."
+  ],
+  "git_commit": "8e21bb669bcc6e8eb953a1fb24dfc5bb59dc18a4",
+  "input_identity": {
+    "source_tensor": "experiments/baseline/outputs/input_tensor.pt",
+    "reason_reused_not_refetched": "Re-querying the same cubo/STAC AOI+date+band request during Phase 9 development returned 3 time entries where Phases 0-8 observed and indexed only 1 -- the catalog has drifted, so a fresh fetch can no longer be trusted to return the same scene at index 0. Reusing the exact saved tensor is the only way to guarantee the identical scene, per this phase's explicit instruction not to silently substitute another one.",
+    "coordinates": {
+      "lat": 39.49152740347753,
+      "lon": -0.4308725142800361
+    },
+    "scene_date_window": {
+      "start": "2023-01-15",
+      "end": "2023-01-16"
+    },
+    "scene_time_index": 0,
+    "scene_timestamp": "2023-01-15T10:54:11.024000000",
+    "band_order": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ],
+    "input_scale": "reflectance",
+    "input_value_range": {
+      "min": 0.06800000369548798,
+      "max": 0.7188000082969666,
+      "mean": 0.23006419837474823
+    },
+    "input_geospatial_metadata": {
+      "crs": "EPSG:32630",
+      "transform": [
+        10.0,
+        0.0,
+        720285.0,
+        0.0,
+        -10.0,
+        4375125.0
+      ],
+      "bounds": [
+        720285.0,
+        4373845.0,
+        721565.0,
+        4375125.0
+      ]
+    }
+  },
+  "model_identity": {
+    "name": "SEN2SRLite/NonReference_RGBN_x4",
+    "manifest_url": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+    "weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN"
+  },
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "uncertainty_configuration": {
+    "seed": 42,
+    "n": 6,
+    "transform_names": [
+      "identity",
+      "hflip",
+      "vflip",
+      "rot90",
+      "rot180",
+      "rot270"
+    ],
+    "scalar_summary": 0.0011742570058385082,
+    "scalar_summary_definition": "Mean per-pixel standard deviation across the TTA ensemble, averaged over bands. A relative model-stability proxy, not a calibrated confidence value.",
+    "overall_distribution": {
+      "mean": 0.0011742570058385082,
+      "median": 0.0009934843983501196,
+      "std": 0.0007487089690760612,
+      "p90": 0.0020396666601300243,
+      "p95": 0.0025257432134822007,
+      "min": 0.00010449731780681759,
+      "max": 0.021818019449710846,
+      "n_pixels": 262144
+    }
+  },
+  "shapes": {
+    "input_shape": [
+      4,
+      128,
+      128
+    ],
+    "output_shape": [
+      4,
+      512,
+      512
+    ]
+  },
+  "bands": [
+    "B04",
+    "B03",
+    "B02",
+    "B08"
+  ],
+  "geospatial": {
+    "crs": "EPSG:32630",
+    "native_transform": [
+      10.0,
+      0.0,
+      720285.0,
+      0.0,
+      -10.0,
+      4375125.0
+    ],
+    "native_bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "native_width_height": [
+      128,
+      128
+    ],
+    "sr_transform": [
+      2.5,
+      0.0,
+      720285.0,
+      0.0,
+      -2.5,
+      4375125.0
+    ],
+    "sr_bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "sr_width_height": [
+      512,
+      512
+    ],
+    "scale_factor": 4,
+    "native_resolution_m": 10.0,
+    "sr_resolution_m": 2.5
+  },
+  "self_consistency": {
+    "downsample_consistency": {
+      "downsample_method": "area_average_pool",
+      "scale_factor": 4,
+      "band_names": [
+        "B04",
+        "B03",
+        "B02",
+        "B08"
+      ],
+      "valid_pixel_count": 16384,
+      "total_pixel_count": 16384,
+      "mask_coverage": 1.0,
+      "overall": {
+        "band_name": null,
+        "status": "COMPUTABLE",
+        "valid_pixel_count": 16384,
+        "sample_count": 65536,
+        "mean_abs_error": 0.002216606802903698,
+        "rmse": 0.003283964120605377,
+        "max_abs_error": 0.03993229568004608,
+        "normalized_rmse": 0.014274123004570684
+      },
+      "per_band": {
+        "B04": {
+          "band_name": "B04",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.001988313454148738,
+          "rmse": 0.0029616227376018144,
+          "max_abs_error": 0.03662371635437012,
+          "normalized_rmse": 0.014589998375059922
+        },
+        "B03": {
+          "band_name": "B03",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.002152034195660235,
+          "rmse": 0.003231535057090952,
+          "max_abs_error": 0.03993229568004608,
+          "normalized_rmse": 0.017104421289839238
+        },
+        "B02": {
+          "band_name": "B02",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.0017468669921072433,
+          "rmse": 0.0026455901055385486,
+          "max_abs_error": 0.038187265396118164,
+          "normalized_rmse": 0.01670867731296551
+        },
+        "B08": {
+          "band_name": "B08",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.002979212569698575,
+          "rmse": 0.004113940484509034,
+          "max_abs_error": 0.025785505771636963,
+          "normalized_rmse": 0.011118739915898878
+        }
+      }
+    },
+    "ndvi_comparison": {
+      "index_name": "NDVI",
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "mean_abs_discrepancy": 0.004844208913720879,
+      "rmse": 0.0065751708777197476,
+      "max_abs_discrepancy": 0.04321786982423968
+    },
+    "b08_b04_ratio_comparison": {
+      "index_name": "B08_B04_ratio",
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "mean_abs_discrepancy": 0.02203506265971323,
+      "rmse": 0.03291604306066732,
+      "max_abs_discrepancy": 0.6736925106114207
+    },
+    "cross_tile": null,
+    "parameters": {
+      "downsample_method": "area_average_pool",
+      "scale_factor": 4,
+      "band_names": [
+        "B04",
+        "B03",
+        "B02",
+        "B08"
+      ],
+      "lr_shape": [
+        4,
+        128,
+        128
+      ],
+      "sr_shape": [
+        4,
+        512,
+        512
+      ],
+      "mask_shape": [
+        128,
+        128
+      ],
+      "mask_coverage": 1.0,
+      "valid_pixel_count": 16384,
+      "total_pixel_count": 16384
+    }
+  },
+  "ndvi_analysis": {
+    "ndvi_formula": "NDVI = (NIR - Red) / (NIR + Red), where NIR = B08, Red = B04",
+    "resampling_method": "area_average_pool",
+    "valid_pixel_counts": {
+      "native_ndvi": 16384,
+      "sr_ndvi": 262144,
+      "comparison_common_grid": 16384
+    },
+    "comparison_metrics": {
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "mean_abs_difference": 0.005075360227753123,
+      "rmse": 0.0069323362761932825,
+      "max_abs_difference": 0.05793827772140503,
+      "resampling_method": "area_average_pool"
+    },
+    "uncertainty_weighted_summary": {
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "correlation_uncertainty_vs_abs_diff": 0.3246994885363221,
+      "uncertainty_weighted_mean_abs_diff": 0.005944412507787061,
+      "unweighted_mean_abs_diff": 0.005075360227753123
+    }
+  },
+  "validation_reference": {
+    "source": "experiments/validation/metadata/run_metadata.json",
+    "note": "Phase 4's opensr-test 'spot' benchmark evaluates the SAME frozen model against an INDEPENDENT, DIFFERENT scene/sensor (SPOT reference imagery) -- not this Baseline 0 scene. Cited here for cross-reference only; not recomputed and not directly comparable pixel-for-pixel to this run's own self-consistency numbers.",
+    "dataset": {
+      "name": "opensr-test",
+      "subset": "spot",
+      "package_version": "1.3.3",
+      "dataset_format_version": "v3",
+      "hf_dataset_repo": "isp-uv-es/opensr-test",
+      "hf_dataset_repo_commit": "e4600b9c74a621adeec047e5f6cc7a2d70a58134",
+      "github_repo_commit": "b42b1cba8a04b32341044f1f29474e5448499158",
+      "n_samples_evaluated": 9,
+      "load_seconds": 0.04
+    },
+    "aggregate": {
+      "psnr_db": {
+        "bicubic_mean": 33.11714821325168,
+        "bicubic_std": 5.078916908805615,
+        "sen2sr_mean": 33.2228662695906,
+        "sen2sr_std": 5.102226929491011,
+        "n_samples": 9
+      },
+      "ssim": {
+        "bicubic_mean": 0.817646496825748,
+        "bicubic_std": 0.10734397433972719,
+        "sen2sr_mean": 0.8303963674439324,
+        "sen2sr_std": 0.09865828939753192,
+        "n_samples": 9
+      },
+      "rmse": {
+        "bicubic_mean": 0.026089897588609575,
+        "bicubic_std": 0.014778275311986791,
+        "sen2sr_mean": 0.02580977357971018,
+        "sen2sr_std": 0.01465164978542458,
+        "n_samples": 9
+      },
+      "sam_degrees": {
+        "bicubic_mean": 1.8457877371046278,
+        "bicubic_std": 1.4293150838877564,
+        "sen2sr_mean": 2.0710167619917126,
+        "sen2sr_std": 1.6281254489936536,
+        "n_samples": 9
+      },
+      "ergas": {
+        "bicubic_mean": 3.7674002502917543,
+        "bicubic_std": 2.540203203373246,
+        "sen2sr_mean": 3.6845730341730376,
+        "sen2sr_std": 2.458873356976332,
+        "n_samples": 9
+      }
+    }
+  },
+  "artifacts": {
+    "sr_geotiff": "experiments/end_to_end/outputs/sr_mean.tif",
+    "uncertainty_geotiff": "experiments/end_to_end/outputs/uncertainty.tif",
+    "native_ndvi_geotiff": "experiments/end_to_end/outputs/ndvi_native.tif",
+    "sr_ndvi_geotiff": "experiments/end_to_end/outputs/ndvi_sr.tif",
+    "ndvi_diff_geotiff": "experiments/end_to_end/outputs/ndvi_diff.tif",
+    "summary_visualization": "experiments/end_to_end/outputs/summary.png"
+  },
+  "environment": {
+    "python_version": "3.11.9",
+    "torch_version": "2.14.0+cu130",
+    "torch_cuda_build": "13.0",
+    "cuda_available": true
+  },
+  "timestamps": {
+    "run_start_utc": "2026-09-11T06:41:33Z",
+    "run_end_utc": "2026-09-11T06:41:36Z"
+  },
+  "stage_timings_seconds": {
+    "model_load_seconds": 0.9239,
+    "preprocessing_seconds": 0.0005,
+    "sr_plus_uncertainty_seconds": 0.291,
+    "geospatial_export_seconds": 0.0157,
+    "consistency_seconds": 0.0015,
+    "ndvi_analysis_seconds": 0.0068,
+    "visualization_seconds": 1.0888,
+    "total_seconds": 2.3477
+  }
+}

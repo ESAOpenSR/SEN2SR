@@ -1,0 +1,126 @@
+{
+  "experiment": "baseline-geoexport (Phase 2)",
+  "model_name": "SEN2SRLite/NonReference_RGBN_x4",
+  "model_artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+  "model_weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN",
+  "coordinates": {
+    "lat": 39.49152740347753,
+    "lon": -0.4308725142800361
+  },
+  "scene_date_window": {
+    "start": "2023-01-15",
+    "end": "2023-01-16"
+  },
+  "scene_time_index": 0,
+  "scene_timestamp": "2023-01-15T10:54:11.024000000",
+  "bands": [
+    "B04",
+    "B03",
+    "B02",
+    "B08"
+  ],
+  "input_resolution_m": 10.0,
+  "input_geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      10.0,
+      0.0,
+      720285.0,
+      0.0,
+      -10.0,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ]
+  },
+  "preprocessing_mask_coverage": 1.0,
+  "output_shape": [
+    4,
+    512,
+    512
+  ],
+  "inference_seconds": 0.1734,
+  "output_geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      2.5,
+      0.0,
+      720285.0,
+      0.0,
+      -2.5,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "resolution_m": 2.5,
+    "width": 512,
+    "height": 512,
+    "band_names": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ]
+  },
+  "reopened_geotiff_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      2.5,
+      0.0,
+      720285.0,
+      0.0,
+      -2.5,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "resolution_m": 2.5,
+    "width": 512,
+    "height": 512,
+    "band_names": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ],
+    "nodata_value": 0.0,
+    "sr_variant": "SEN2SRLite/NonReference_RGBN_x4",
+    "acquisition_timestamp": "2023-01-15T10:54:11.024000000"
+  },
+  "verification_checks": {
+    "crs_matches": true,
+    "transform_matches": true,
+    "bounds_matches": true,
+    "width_matches": true,
+    "height_matches": true,
+    "resolution_matches": true,
+    "band_order_matches": true,
+    "pixel_values_match": true
+  },
+  "invariants": {
+    "footprint_drift_m": 0.0,
+    "footprint_ok": true,
+    "output_pixel_size_m": 2.5,
+    "expected_output_pixel_size_m": 2.5,
+    "pixel_size_ok": true
+  },
+  "all_checks_passed": true,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "python_version": "3.11.9",
+  "torch_version": "2.14.0+cu130",
+  "rasterio_version": "1.4.4",
+  "cuda_available": true
+}

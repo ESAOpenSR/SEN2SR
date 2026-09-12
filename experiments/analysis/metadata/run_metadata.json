@@ -1,0 +1,112 @@
+{
+  "experiment": "analysis (Phase 6) -- NDVI downstream demonstration, NOT a claim of native 2.5m ground truth",
+  "scientific_caveats": [
+    "SR-derived 2.5 m NDVI is a learned inference on a 2.5 m pixel grid, not a directly observed native 2.5 m vegetation measurement.",
+    "The native 10 m NDVI and SR-derived NDVI are not independent ground truths -- the SR output was itself derived from the same underlying 10 m observation.",
+    "Agreement or disagreement between them measures internal consistency and downstream utility, not proof of physical accuracy.",
+    "Uncertainty here is the Phase 5 relative model-stability proxy, not a calibrated probability of NDVI error."
+  ],
+  "reused_artifacts": {
+    "lr_reflectance": "experiments/baseline/outputs/input_tensor.pt",
+    "sr_mean_prediction": "experiments/uncertainty/outputs/sr_mean_tensor.pt",
+    "sr_std_prediction": "experiments/uncertainty/outputs/sr_std_tensor.pt",
+    "note": "No model inference and no scene re-fetch were performed by this experiment."
+  },
+  "scene_identity": {
+    "coordinates": {
+      "lat": 39.49152740347753,
+      "lon": -0.4308725142800361
+    },
+    "scene_date_window": {
+      "start": "2023-01-15",
+      "end": "2023-01-16"
+    },
+    "scene_time_index": 0,
+    "scene_timestamp": "2023-01-15T10:54:11.024000000",
+    "band_order": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ]
+  },
+  "native_resolution_m": 10.0,
+  "sr_resolution_m": 2.5,
+  "scale_factor": 4,
+  "ndvi_formula": "NDVI = (NIR - Red) / (NIR + Red), where NIR = B08, Red = B04",
+  "resampling_method": "area_average_pool",
+  "valid_pixel_counts": {
+    "native_ndvi": 16384,
+    "sr_ndvi": 262144,
+    "comparison_common_grid": 16384
+  },
+  "comparison_metrics": {
+    "status": "COMPUTABLE",
+    "valid_pixel_count": 16384,
+    "mean_abs_difference": 0.005075360227753123,
+    "rmse": 0.0069323362761932825,
+    "max_abs_difference": 0.05793827772140503,
+    "resampling_method": "area_average_pool"
+  },
+  "uncertainty_weighted_summary": {
+    "status": "COMPUTABLE",
+    "valid_pixel_count": 16384,
+    "correlation_uncertainty_vs_abs_diff": 0.3246994885363221,
+    "uncertainty_weighted_mean_abs_diff": 0.005944412507787061,
+    "unweighted_mean_abs_diff": 0.005075360227753123
+  },
+  "geospatial_metadata": {
+    "native": {
+      "crs": "EPSG:32630",
+      "transform": [
+        10.0,
+        0.0,
+        720285.0,
+        0.0,
+        -10.0,
+        4375125.0
+      ],
+      "bounds": [
+        720285.0,
+        4373845.0,
+        721565.0,
+        4375125.0
+      ]
+    },
+    "sr_output": {
+      "crs": "EPSG:32630",
+      "transform": [
+        2.5,
+        0.0,
+        720285.0,
+        0.0,
+        -2.5,
+        4375125.0
+      ],
+      "bounds": [
+        720285.0,
+        4373845.0,
+        721565.0,
+        4375125.0
+      ],
+      "resolution_m": 2.5,
+      "width": 512,
+      "height": 512,
+      "band_names": [
+        "B04",
+        "B03",
+        "B02",
+        "B08"
+      ]
+    }
+  },
+  "environment": {
+    "python_version": "3.11.9",
+    "torch_version": "2.14.0+cu130"
+  },
+  "timestamps": {
+    "run_start_utc": "2026-09-10T15:40:07Z",
+    "run_end_utc": "2026-09-10T15:40:09Z"
+  },
+  "runtime_seconds": 1.822
+}

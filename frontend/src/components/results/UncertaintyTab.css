@@ -1,0 +1,87 @@
+.uncertainty-tab__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.uncertainty-tab__label {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--uncertainty);
+}
+
+.uncertainty-tab__explainer {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  max-width: 70ch;
+}
+
+.uncertainty-tab__toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.uncertainty-tab__toggle button {
+  background: var(--surface);
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.uncertainty-tab__toggle button.is-active {
+  background: var(--uncertainty-wash);
+  color: var(--uncertainty);
+}
+
+.uncertainty-tab__canvas-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-inset);
+}
+
+.uncertainty-tab__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.uncertainty-tab__legend {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-primary);
+}
+
+.uncertainty-tab__legend-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(10, 13, 18, 1), var(--uncertainty));
+}
+
+.uncertainty-tab__caption {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  max-width: 74ch;
+}
+
+.uncertainty-tab__caption--dim {
+  color: var(--text-disabled);
+}

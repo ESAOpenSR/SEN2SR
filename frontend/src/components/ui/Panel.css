@@ -1,0 +1,24 @@
+.panel {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+}
+
+.panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-3);
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.panel__title {
+  font-size: 15px;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.panel__body {
+  padding: var(--space-5);
+}

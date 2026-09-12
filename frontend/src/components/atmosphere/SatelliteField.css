@@ -1,0 +1,15 @@
+.satellite-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.satellite-field canvas {
+  display: block;
+}
+
+.satellite-field--hero {
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}

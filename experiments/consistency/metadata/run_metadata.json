@@ -1,0 +1,175 @@
+{
+  "experiment": "consistency (Phase 3) -- spectral/self-consistency diagnostics, NOT an accuracy benchmark",
+  "model_name": "SEN2SRLite/NonReference_RGBN_x4",
+  "model_artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+  "model_weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN",
+  "coordinates": {
+    "lat": 39.49152740347753,
+    "lon": -0.4308725142800361
+  },
+  "scene_date_window": {
+    "start": "2023-01-15",
+    "end": "2023-01-16"
+  },
+  "scene_time_index": 0,
+  "scene_timestamp": "2023-01-15T10:54:11.024000000",
+  "bands": [
+    "B04",
+    "B03",
+    "B02",
+    "B08"
+  ],
+  "input_resolution_m": 10.0,
+  "input_geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      10.0,
+      0.0,
+      720285.0,
+      0.0,
+      -10.0,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ]
+  },
+  "output_geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "resolution_m": 2.5,
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "width": 512,
+    "height": 512
+  },
+  "preprocessing_mask_coverage": 1.0,
+  "output_shape": [
+    4,
+    512,
+    512
+  ],
+  "inference_seconds": 0.4962,
+  "consistency_diagnostics": {
+    "downsample_consistency": {
+      "downsample_method": "area_average_pool",
+      "scale_factor": 4,
+      "band_names": [
+        "B04",
+        "B03",
+        "B02",
+        "B08"
+      ],
+      "valid_pixel_count": 16384,
+      "total_pixel_count": 16384,
+      "mask_coverage": 1.0,
+      "overall": {
+        "band_name": null,
+        "status": "COMPUTABLE",
+        "valid_pixel_count": 16384,
+        "sample_count": 65536,
+        "mean_abs_error": 0.0022283627988031185,
+        "rmse": 0.0033009377440832645,
+        "max_abs_error": 0.04103860259056091,
+        "normalized_rmse": 0.014347900786683592
+      },
+      "per_band": {
+        "B04": {
+          "band_name": "B04",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.0020062041251094342,
+          "rmse": 0.0029885240189332367,
+          "max_abs_error": 0.03702026605606079,
+          "normalized_rmse": 0.014722523576845177
+        },
+        "B03": {
+          "band_name": "B03",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.0021600205127469962,
+          "rmse": 0.0032444394400799057,
+          "max_abs_error": 0.040619730949401855,
+          "normalized_rmse": 0.01717272381456171
+        },
+        "B02": {
+          "band_name": "B02",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.0017552155927660351,
+          "rmse": 0.002658906904430262,
+          "max_abs_error": 0.04103860259056091,
+          "normalized_rmse": 0.016792781836586716
+        },
+        "B08": {
+          "band_name": "B08",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "sample_count": 16384,
+          "mean_abs_error": 0.0029920109645900084,
+          "rmse": 0.004130049750637426,
+          "max_abs_error": 0.028216660022735596,
+          "normalized_rmse": 0.01116227840192998
+        }
+      }
+    },
+    "ndvi_comparison": {
+      "index_name": "NDVI",
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "mean_abs_discrepancy": 0.004892392357761036,
+      "rmse": 0.006648029109010056,
+      "max_abs_discrepancy": 0.04503150105795943
+    },
+    "b08_b04_ratio_comparison": {
+      "index_name": "B08_B04_ratio",
+      "status": "COMPUTABLE",
+      "valid_pixel_count": 16384,
+      "mean_abs_discrepancy": 0.022217949880816462,
+      "rmse": 0.033196732344891705,
+      "max_abs_discrepancy": 0.7112593003359287
+    },
+    "cross_tile": null,
+    "parameters": {
+      "downsample_method": "area_average_pool",
+      "scale_factor": 4,
+      "band_names": [
+        "B04",
+        "B03",
+        "B02",
+        "B08"
+      ],
+      "lr_shape": [
+        4,
+        128,
+        128
+      ],
+      "sr_shape": [
+        4,
+        512,
+        512
+      ],
+      "mask_shape": [
+        128,
+        128
+      ],
+      "mask_coverage": 1.0,
+      "valid_pixel_count": 16384,
+      "total_pixel_count": 16384
+    }
+  },
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "python_version": "3.11.9",
+  "torch_version": "2.14.0+cu130",
+  "cuda_available": true
+}

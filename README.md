@@ -11,8 +11,8 @@
 <a href='https://pypi.python.org/pypi/sen2sr'>
     <img src='https://img.shields.io/pypi/v/sen2sr.svg' alt='PyPI' />
 </a>
-<a href="https://opensource.org/licenses/MIT" target="_blank">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">
+    <img src="https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg" alt="License">
 </a>
 <a href="https://github.com/psf/black" target="_blank">
     <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Black">

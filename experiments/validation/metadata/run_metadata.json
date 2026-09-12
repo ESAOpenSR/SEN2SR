@@ -1,0 +1,2296 @@
+{
+  "experiment": "validation (Phase 4) -- reference-based benchmark vs. opensr-test, NOT native Sentinel-2 ground truth",
+  "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+  "dataset": {
+    "name": "opensr-test",
+    "subset": "spot",
+    "package_version": "1.3.3",
+    "dataset_format_version": "v3",
+    "hf_dataset_repo": "isp-uv-es/opensr-test",
+    "hf_dataset_repo_commit": "e4600b9c74a621adeec047e5f6cc7a2d70a58134",
+    "github_repo_commit": "b42b1cba8a04b32341044f1f29474e5448499158",
+    "n_samples_evaluated": 9,
+    "load_seconds": 0.04
+  },
+  "model": {
+    "name": "SEN2SRLite/NonReference_RGBN_x4",
+    "artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+    "weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN"
+  },
+  "environment": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "python_version": "3.11.9",
+    "torch_version": "2.14.0+cu130",
+    "opensr_test_version": "1.3.3",
+    "cuda_available": true
+  },
+  "timestamps": {
+    "run_start_utc": "2026-09-10T14:31:53Z",
+    "run_end_utc": "2026-09-10T14:32:03Z"
+  },
+  "per_sample_timing": [
+    {
+      "sample_id": "ROI_0037",
+      "inference_seconds": 0.1506493091583252
+    },
+    {
+      "sample_id": "ROI_0050",
+      "inference_seconds": 0.0077800750732421875
+    },
+    {
+      "sample_id": "ROI_0117",
+      "inference_seconds": 0.008135318756103516
+    },
+    {
+      "sample_id": "ROI_0803",
+      "inference_seconds": 0.011343955993652344
+    },
+    {
+      "sample_id": "ROI_0967",
+      "inference_seconds": 0.008069992065429688
+    },
+    {
+      "sample_id": "ROI_1647",
+      "inference_seconds": 0.009533405303955078
+    },
+    {
+      "sample_id": "ROI_2603",
+      "inference_seconds": 0.013110876083374023
+    },
+    {
+      "sample_id": "ROI_3126",
+      "inference_seconds": 0.008063077926635742
+    },
+    {
+      "sample_id": "ROI_3171",
+      "inference_seconds": 0.014831066131591797
+    }
+  ],
+  "aggregate": {
+    "psnr_db": {
+      "bicubic_mean": 33.11714821325168,
+      "bicubic_std": 5.078916908805615,
+      "sen2sr_mean": 33.2228662695906,
+      "sen2sr_std": 5.102226929491011,
+      "n_samples": 9
+    },
+    "ssim": {
+      "bicubic_mean": 0.817646496825748,
+      "bicubic_std": 0.10734397433972719,
+      "sen2sr_mean": 0.8303963674439324,
+      "sen2sr_std": 0.09865828939753192,
+      "n_samples": 9
+    },
+    "rmse": {
+      "bicubic_mean": 0.026089897588609575,
+      "bicubic_std": 0.014778275311986791,
+      "sen2sr_mean": 0.02580977357971018,
+      "sen2sr_std": 0.01465164978542458,
+      "n_samples": 9
+    },
+    "sam_degrees": {
+      "bicubic_mean": 1.8457877371046278,
+      "bicubic_std": 1.4293150838877564,
+      "sen2sr_mean": 2.0710167619917126,
+      "sen2sr_std": 1.6281254489936536,
+      "n_samples": 9
+    },
+    "ergas": {
+      "bicubic_mean": 3.7674002502917543,
+      "bicubic_std": 2.540203203373246,
+      "sen2sr_mean": 3.6845730341730376,
+      "sen2sr_std": 2.458873356976332,
+      "n_samples": 9
+    }
+  },
+  "per_sample_reports": [
+    {
+      "subset": "spot",
+      "sample_index": 0,
+      "roi_id": "ROI_0037",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 37.53265124376575,
+          "ssim": 0.9395537972450256,
+          "rmse": 0.01328517984090509,
+          "sam_degrees": 0.6183860898017883,
+          "ergas": 1.9487951661660101
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 37.707051610051906,
+          "ssim": 0.9444799423217773,
+          "rmse": 0.013021092362608927,
+          "sam_degrees": 0.6771776676177979,
+          "ergas": 1.9095219744412553
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 37.53265124376575,
+            "sen2sr_value": 37.707051610051906,
+            "absolute_change": 0.1744003662861573,
+            "relative_change": 0.004646630613794584,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.9395537972450256,
+            "sen2sr_value": 0.9444799423217773,
+            "absolute_change": 0.004926145076751709,
+            "relative_change": 0.00524306866854908,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.01328517984090509,
+            "sen2sr_value": 0.013021092362608927,
+            "absolute_change": -0.00026408747829616275,
+            "relative_change": -0.019878351776845125,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 0.6183860898017883,
+            "sen2sr_value": 0.6771776676177979,
+            "absolute_change": 0.05879157781600952,
+            "relative_change": 0.09507260720378433,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 1.9487951661660101,
+            "sen2sr_value": 1.9095219744412553,
+            "absolute_change": -0.03927319172475485,
+            "relative_change": -0.020152549845461453,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0009958248119801283,
+        "spectral": 0.18236131966114044,
+        "spatial": 0.0,
+        "synthesis": 0.0018932897364720702,
+        "hallucination": 0.035478219389915466,
+        "omission": 0.9145298600196838,
+        "improvement": 0.04999187961220741,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0005638005626451559,
+            "rmse": 0.0007609840230153932,
+            "max_abs_error": 0.006775468587875366,
+            "normalized_rmse": 0.004490863969443665
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0006149006317173189,
+              "rmse": 0.0008402763165674316,
+              "max_abs_error": 0.006775468587875366,
+              "normalized_rmse": 0.004294262012749563
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0005620356960207573,
+              "rmse": 0.0007335741488994282,
+              "max_abs_error": 0.004573144018650055,
+              "normalized_rmse": 0.004885148384722629
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0004310939430069993,
+              "rmse": 0.0005671663645751726,
+              "max_abs_error": 0.0037468597292900085,
+              "normalized_rmse": 0.005507239044435055
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.000647171979835548,
+              "rmse": 0.0008663219539615173,
+              "max_abs_error": 0.0053157806396484375,
+              "normalized_rmse": 0.0037833564077746637
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0009906757997225277,
+          "rmse": 0.0013195686559577154,
+          "max_abs_discrepancy": 0.012697298348750136
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0023800268012750996,
+          "rmse": 0.0032013825640431572,
+          "max_abs_discrepancy": 0.032626237906991484
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 0,
+        "roi_id": "ROI_0037",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 1,
+      "roi_id": "ROI_0050",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 41.33018340805211,
+          "ssim": 0.9458612203598022,
+          "rmse": 0.008580069971710281,
+          "sam_degrees": 0.4306676983833313,
+          "ergas": 0.8886595264523058
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 41.414771772168265,
+          "ssim": 0.9473485350608826,
+          "rmse": 0.008496917692878117,
+          "sam_degrees": 0.49475806951522827,
+          "ergas": 0.88538241044647
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 41.33018340805211,
+            "sen2sr_value": 41.414771772168265,
+            "absolute_change": 0.08458836411615778,
+            "relative_change": 0.0020466486509633525,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.9458612203598022,
+            "sen2sr_value": 0.9473485350608826,
+            "absolute_change": 0.0014873147010803223,
+            "relative_change": 0.0015724449518234325,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.008580069971710281,
+            "sen2sr_value": 0.008496917692878117,
+            "absolute_change": -8.315227883216349e-05,
+            "relative_change": -0.009691328754465692,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 0.4306676983833313,
+            "sen2sr_value": 0.49475806951522827,
+            "absolute_change": 0.06409037113189697,
+            "relative_change": 0.14881629472673158,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 0.8886595264523058,
+            "sen2sr_value": 0.88538241044647,
+            "absolute_change": -0.0032771160058358006,
+            "relative_change": -0.003687707055725445,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0006687346030957997,
+        "spectral": 0.1288585513830185,
+        "spatial": 0.0,
+        "synthesis": 0.0012622950598597527,
+        "hallucination": 0.04293939471244812,
+        "omission": 0.907663106918335,
+        "improvement": 0.04939750209450722,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0004203746071880232,
+            "rmse": 0.0005575599678237826,
+            "max_abs_error": 0.00747111439704895,
+            "normalized_rmse": 0.00249202548083746
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.00043558477591432165,
+              "rmse": 0.0005874303195371964,
+              "max_abs_error": 0.00747111439704895,
+              "normalized_rmse": 0.002246037727793806
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.00042686850883910665,
+              "rmse": 0.0005541035166565443,
+              "max_abs_error": 0.007245242595672607,
+              "normalized_rmse": 0.003160969772894816
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.00034868807370003196,
+              "rmse": 0.0004622052497513256,
+              "max_abs_error": 0.006420552730560303,
+              "normalized_rmse": 0.004066601930561232
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0004703570702986326,
+              "rmse": 0.0006146167020983262,
+              "max_abs_error": 0.003980964422225952,
+              "normalized_rmse": 0.001784312786682245
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0006696277793233263,
+          "rmse": 0.0008822315911649137,
+          "max_abs_discrepancy": 0.011191261367656705
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0018018682021250993,
+          "rmse": 0.002376258602284992,
+          "max_abs_discrepancy": 0.026185977016712325
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 1,
+        "roi_id": "ROI_0050",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 2,
+      "roi_id": "ROI_0117",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 25.941124792936755,
+          "ssim": 0.6760889291763306,
+          "rmse": 0.05045959498864904,
+          "sam_degrees": 4.610755920410156,
+          "ergas": 7.908292181275928
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 26.057594072438718,
+          "ssim": 0.7050009965896606,
+          "rmse": 0.049787497358773414,
+          "sam_degrees": 5.265602111816406,
+          "ergas": 7.490399658578441
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 25.941124792936755,
+            "sen2sr_value": 26.057594072438718,
+            "absolute_change": 0.11646927950196329,
+            "relative_change": 0.004489754412409886,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.6760889291763306,
+            "sen2sr_value": 0.7050009965896606,
+            "absolute_change": 0.028912067413330078,
+            "relative_change": 0.042763704840653484,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.05045959498864904,
+            "sen2sr_value": 0.049787497358773414,
+            "absolute_change": -0.0006720976298756273,
+            "relative_change": -0.013319520896408634,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 4.610755920410156,
+            "sen2sr_value": 5.265602111816406,
+            "absolute_change": 0.65484619140625,
+            "relative_change": 0.14202577683791104,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 7.908292181275928,
+            "sen2sr_value": 7.490399658578441,
+            "absolute_change": -0.4178925226974872,
+            "relative_change": -0.05284232209918984,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.00466495705768466,
+        "spectral": 1.103685975074768,
+        "spatial": 0.0,
+        "synthesis": 0.010760927572846413,
+        "hallucination": 0.08801238238811493,
+        "omission": 0.7711454629898071,
+        "improvement": 0.14084216952323914,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0032629619707904567,
+            "rmse": 0.0047745321971430135,
+            "max_abs_error": 0.04407989978790283,
+            "normalized_rmse": 0.029251651272924138
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.003110013182322291,
+              "rmse": 0.004538141423449536,
+              "max_abs_error": 0.035691648721694946,
+              "normalized_rmse": 0.035486881332163676
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0029723198138071893,
+              "rmse": 0.004471584570875259,
+              "max_abs_error": 0.04388231039047241,
+              "normalized_rmse": 0.035199348072228624
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0026949762157073565,
+              "rmse": 0.0042578016073528775,
+              "max_abs_error": 0.04407989978790283,
+              "normalized_rmse": 0.043184116966051754
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.00427453867132499,
+              "rmse": 0.005697890848807667,
+              "max_abs_error": 0.036152809858322144,
+              "normalized_rmse": 0.01903256252210331
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.010546018435152335,
+          "rmse": 0.013991908114931789,
+          "max_abs_discrepancy": 0.0809157959672826
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.10660742349552868,
+          "rmse": 0.20219542489141895,
+          "max_abs_discrepancy": 4.317167128072315
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 2,
+        "roi_id": "ROI_0117",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 3,
+      "roi_id": "ROI_0803",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 37.370237590863134,
+          "ssim": 0.9020610451698303,
+          "rmse": 0.013535930644419675,
+          "sam_degrees": 1.0055299997329712,
+          "ergas": 1.8587144055727451
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 37.64637590187954,
+          "ssim": 0.9122568368911743,
+          "rmse": 0.013112370284105286,
+          "sam_degrees": 1.0867586135864258,
+          "ergas": 1.791180803284095
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 37.370237590863134,
+            "sen2sr_value": 37.64637590187954,
+            "absolute_change": 0.2761383110164033,
+            "relative_change": 0.007389257570145017,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.9020610451698303,
+            "sen2sr_value": 0.9122568368911743,
+            "absolute_change": 0.010195791721343994,
+            "relative_change": 0.011302773549460216,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.013535930644419675,
+            "sen2sr_value": 0.013112370284105286,
+            "absolute_change": -0.00042356036031438934,
+            "relative_change": -0.03129155810864075,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 1.0055299997329712,
+            "sen2sr_value": 1.0867586135864258,
+            "absolute_change": 0.08122861385345459,
+            "relative_change": 0.0807818900231974,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 1.8587144055727451,
+            "sen2sr_value": 1.791180803284095,
+            "absolute_change": -0.06753360228865013,
+            "relative_change": -0.036333501309385015,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0013444906799122691,
+        "spectral": 0.2706962823867798,
+        "spatial": 0.0,
+        "synthesis": 0.002855639671906829,
+        "hallucination": 0.05359344556927681,
+        "omission": 0.8602381944656372,
+        "improvement": 0.08616828918457031,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0008877612077071717,
+            "rmse": 0.0011811619503854837,
+            "max_abs_error": 0.0076971352100372314,
+            "normalized_rmse": 0.006402847359111425
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0009515092178844498,
+              "rmse": 0.0012621462733340835,
+              "max_abs_error": 0.0076971352100372314,
+              "normalized_rmse": 0.006060289442489429
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0008943046309468627,
+              "rmse": 0.0011844078311072268,
+              "max_abs_error": 0.007429495453834534,
+              "normalized_rmse": 0.008204420303368657
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0006972834751195478,
+              "rmse": 0.0009225948202661775,
+              "max_abs_error": 0.005912214517593384,
+              "normalized_rmse": 0.009174897686123604
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0010079475068778265,
+              "rmse": 0.0013166464537196529,
+              "max_abs_error": 0.006942033767700195,
+              "normalized_rmse": 0.0046244472978299745
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.001521410523248301,
+          "rmse": 0.002042125357029188,
+          "max_abs_discrepancy": 0.018680181245260996
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.004394183006328517,
+          "rmse": 0.0060835102823177814,
+          "max_abs_discrepancy": 0.07595559991078371
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 3,
+        "roi_id": "ROI_0803",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 4,
+      "roi_id": "ROI_0967",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 35.54447128660285,
+          "ssim": 0.8778669238090515,
+          "rmse": 0.016702305985226096,
+          "sam_degrees": 0.7394550442695618,
+          "ergas": 1.6303498878967912
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 35.49857230894496,
+          "ssim": 0.8804115056991577,
+          "rmse": 0.016790799841515387,
+          "sam_degrees": 0.8352994918823242,
+          "ergas": 1.6457265575343611
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 35.54447128660285,
+            "sen2sr_value": 35.49857230894496,
+            "absolute_change": -0.04589897765789175,
+            "relative_change": -0.001291311306554492,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.8778669238090515,
+            "sen2sr_value": 0.8804115056991577,
+            "absolute_change": 0.002544581890106201,
+            "relative_change": 0.0028985963829976625,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.016702305985226096,
+            "sen2sr_value": 0.016790799841515387,
+            "absolute_change": 8.849385628929146e-05,
+            "relative_change": 0.005298301705618857,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 0.7394550442695618,
+            "sen2sr_value": 0.8352994918823242,
+            "absolute_change": 0.09584444761276245,
+            "relative_change": 0.12961497572504652,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 1.6303498878967912,
+            "sen2sr_value": 1.6457265575343611,
+            "absolute_change": 0.015376669637569895,
+            "relative_change": 0.009431515131642289,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0014732028357684612,
+        "spectral": 0.21396079659461975,
+        "spatial": 0.0,
+        "synthesis": 0.0029247275087982416,
+        "hallucination": 0.06467356532812119,
+        "omission": 0.8729561567306519,
+        "improvement": 0.062370311468839645,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0008957822011552707,
+            "rmse": 0.0012886590060246356,
+            "max_abs_error": 0.013823240995407104,
+            "normalized_rmse": 0.004649296730179423
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0010632015528244665,
+              "rmse": 0.0015135772703380628,
+              "max_abs_error": 0.011785238981246948,
+              "normalized_rmse": 0.004607738646889849
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0009125353399213054,
+              "rmse": 0.0013200312608854477,
+              "max_abs_error": 0.013307303190231323,
+              "normalized_rmse": 0.005861428969510904
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0007184626324487908,
+              "rmse": 0.0010717788112330254,
+              "max_abs_error": 0.013823240995407104,
+              "normalized_rmse": 0.007469102955142032
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0008889292794265202,
+              "rmse": 0.0012084947794784565,
+              "max_abs_error": 0.008667409420013428,
+              "normalized_rmse": 0.0029367734323815266
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0011125987805540361,
+          "rmse": 0.0016827992107282341,
+          "max_abs_discrepancy": 0.021449181447694754
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0028661062974658026,
+          "rmse": 0.0044618997527766146,
+          "max_abs_discrepancy": 0.0788712039809889
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 4,
+        "roi_id": "ROI_0967",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 5,
+      "roi_id": "ROI_1647",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 26.52235840729892,
+          "ssim": 0.6750093698501587,
+          "rmse": 0.04719348833157817,
+          "sam_degrees": 3.578347682952881,
+          "ergas": 7.142713439692024
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 26.697401982185347,
+          "ssim": 0.707062840461731,
+          "rmse": 0.04625193438802027,
+          "sam_degrees": 4.027290344238281,
+          "ergas": 6.936983605173638
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 26.52235840729892,
+            "sen2sr_value": 26.697401982185347,
+            "absolute_change": 0.17504357488642697,
+            "relative_change": 0.0065998495382015195,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.6750093698501587,
+            "sen2sr_value": 0.707062840461731,
+            "absolute_change": 0.032053470611572266,
+            "relative_change": 0.0474859639632671,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.04719348833157817,
+            "sen2sr_value": 0.04625193438802027,
+            "absolute_change": -0.0009415539435579032,
+            "relative_change": -0.019950929182064495,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 3.578347682952881,
+            "sen2sr_value": 4.027290344238281,
+            "absolute_change": 0.4489426612854004,
+            "relative_change": 0.12546088336361136,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 7.142713439692024,
+            "sen2sr_value": 6.936983605173638,
+            "absolute_change": -0.20572983451838578,
+            "relative_change": -0.028802756299188218,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0046673365868628025,
+        "spectral": 0.9579793810844421,
+        "spatial": 0.0,
+        "synthesis": 0.010876385495066643,
+        "hallucination": 0.06441166996955872,
+        "omission": 0.8145403265953064,
+        "improvement": 0.1210479810833931,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0031785685862928403,
+            "rmse": 0.004656801456807289,
+            "max_abs_error": 0.055987149477005005,
+            "normalized_rmse": 0.026950626186725123
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0036322567625575175,
+              "rmse": 0.005260793058677467,
+              "max_abs_error": 0.055616140365600586,
+              "normalized_rmse": 0.03339077116363185
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.003198208991534557,
+              "rmse": 0.004741142944134867,
+              "max_abs_error": 0.0483265221118927,
+              "normalized_rmse": 0.032159097749977356
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.003204842991181067,
+              "rmse": 0.004826288432371555,
+              "max_abs_error": 0.055987149477005005,
+              "normalized_rmse": 0.040246709379239784
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.00267896559989822,
+              "rmse": 0.0036463350335779097,
+              "max_abs_error": 0.02417340874671936,
+              "normalized_rmse": 0.01369449795565091
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.00956362708195346,
+          "rmse": 0.012719697075651178,
+          "max_abs_discrepancy": 0.08227425192354043
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.04559388892425837,
+          "rmse": 0.07195872987992592,
+          "max_abs_discrepancy": 0.7466637695581069
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 5,
+        "roi_id": "ROI_1647",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 6,
+      "roi_id": "ROI_2603",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 32.5870867289036,
+          "ssim": 0.8154286742210388,
+          "rmse": 0.023477165611917542,
+          "sam_degrees": 0.7969998717308044,
+          "ergas": 2.1836160415912333
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 32.819867502291224,
+          "ssim": 0.8299427032470703,
+          "rmse": 0.022856336689939277,
+          "sam_degrees": 0.8747678399085999,
+          "ergas": 2.1216930588095093
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 32.5870867289036,
+            "sen2sr_value": 32.819867502291224,
+            "absolute_change": 0.23278077338762415,
+            "relative_change": 0.0071433440897665694,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.8154286742210388,
+            "sen2sr_value": 0.8299427032470703,
+            "absolute_change": 0.014514029026031494,
+            "relative_change": 0.017799262504346477,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.023477165611917542,
+            "sen2sr_value": 0.022856336689939277,
+            "absolute_change": -0.0006208289219782649,
+            "relative_change": -0.026443946950015042,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 0.7969998717308044,
+            "sen2sr_value": 0.8747678399085999,
+            "absolute_change": 0.07776796817779541,
+            "relative_change": 0.09757588543761071,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 2.1836160415912333,
+            "sen2sr_value": 2.1216930588095093,
+            "absolute_change": -0.061922982781724034,
+            "relative_change": -0.028357999576060926,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.001668512704782188,
+        "spectral": 0.2141839563846588,
+        "spatial": 0.0,
+        "synthesis": 0.0034734357614070177,
+        "hallucination": 0.0469907782971859,
+        "omission": 0.8836807012557983,
+        "improvement": 0.06932851672172546,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0009605499604390388,
+            "rmse": 0.0013727662426847712,
+            "max_abs_error": 0.016658544540405273,
+            "normalized_rmse": 0.005058065098831242
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0011246827439208573,
+              "rmse": 0.0016005474180512363,
+              "max_abs_error": 0.014604300260543823,
+              "normalized_rmse": 0.005129125239512257
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.001003323403892864,
+              "rmse": 0.0014342104564407127,
+              "max_abs_error": 0.016658544540405273,
+              "normalized_rmse": 0.006405987737091057
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0007585689252209704,
+              "rmse": 0.001124897523577266,
+              "max_abs_error": 0.012828424572944641,
+              "normalized_rmse": 0.00705372949868454
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0009556247687214636,
+              "rmse": 0.0012860180865271046,
+              "max_abs_error": 0.01148080825805664,
+              "normalized_rmse": 0.0032958463010549595
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0012160089284462838,
+          "rmse": 0.0017963188019830148,
+          "max_abs_discrepancy": 0.025521368710316406
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0031230978525453,
+          "rmse": 0.004798617482124025,
+          "max_abs_discrepancy": 0.12201668699187751
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 6,
+        "roi_id": "ROI_2603",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 7,
+      "roi_id": "ROI_3126",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 28.022806224192482,
+          "ssim": 0.6757423877716064,
+          "rmse": 0.03970632461466985,
+          "sam_degrees": 2.9405672550201416,
+          "ergas": 6.451626198039925
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 27.90810868143856,
+          "ssim": 0.6889650821685791,
+          "rmse": 0.04023412546987838,
+          "sam_degrees": 3.2834811210632324,
+          "ergas": 6.540672318646211
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 28.022806224192482,
+            "sen2sr_value": 27.90810868143856,
+            "absolute_change": -0.11469754275392319,
+            "relative_change": -0.004093007025645533,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.6757423877716064,
+            "sen2sr_value": 0.6889650821685791,
+            "absolute_change": 0.013222694396972656,
+            "relative_change": 0.019567655716518088,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.03970632461466985,
+            "sen2sr_value": 0.04023412546987838,
+            "absolute_change": 0.0005278008552085309,
+            "relative_change": 0.01329261422029301,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 2.9405672550201416,
+            "sen2sr_value": 3.2834811210632324,
+            "absolute_change": 0.3429138660430908,
+            "relative_change": 0.11661486927655461,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 6.451626198039925,
+            "sen2sr_value": 6.540672318646211,
+            "absolute_change": 0.08904612060628558,
+            "relative_change": 0.01380212025199767,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0035250314977020025,
+        "spectral": 0.7551494240760803,
+        "spatial": 0.0,
+        "synthesis": 0.008386355824768543,
+        "hallucination": 0.0951506644487381,
+        "omission": 0.8244305849075317,
+        "improvement": 0.08041878789663315,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.0024561809768300913,
+            "rmse": 0.003551568958589998,
+            "max_abs_error": 0.03574496507644653,
+            "normalized_rmse": 0.021743442906536004
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0029226236651425097,
+              "rmse": 0.004199085112184844,
+              "max_abs_error": 0.03405684232711792,
+              "normalized_rmse": 0.023185094469205855
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0025063320050833227,
+              "rmse": 0.0036005073051947525,
+              "max_abs_error": 0.03574496507644653,
+              "normalized_rmse": 0.025884410493968377
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.001963002467340491,
+              "rmse": 0.0028910882716247717,
+              "max_abs_error": 0.029960155487060547,
+              "normalized_rmse": 0.0289919481763248
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0024327657697540417,
+              "rmse": 0.0033911956950345244,
+              "max_abs_error": 0.02609354257583618,
+              "normalized_rmse": 0.014527812102004855
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0054818464172700886,
+          "rmse": 0.008300204535504936,
+          "max_abs_discrepancy": 0.0769943012960691
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.01755165477733446,
+          "rmse": 0.039741117891896244,
+          "max_abs_discrepancy": 1.5191136589133265
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 7,
+        "roi_id": "ROI_3126",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    },
+    {
+      "subset": "spot",
+      "sample_index": 8,
+      "roi_id": "ROI_3171",
+      "standard_reference_metrics": {
+        "bicubic": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 33.203414236649486,
+          "ssim": 0.8512061238288879,
+          "rmse": 0.0218690183084104,
+          "sam_degrees": 1.8913800716400146,
+          "ergas": 3.893835405938824
+        },
+        "sen2sr": {
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 262144,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "scale_factor": 4,
+          "data_range": 1.0,
+          "psnr_db": 33.25605259491685,
+          "ssim": 0.8580988645553589,
+          "rmse": 0.021736888129672567,
+          "sam_degrees": 2.094015598297119,
+          "ergas": 3.83959692064336
+        },
+        "comparisons": {
+          "psnr_db": {
+            "bicubic_value": 33.203414236649486,
+            "sen2sr_value": 33.25605259491685,
+            "absolute_change": 0.05263835826736596,
+            "relative_change": 0.0015853296860436853,
+            "higher_is_better": true
+          },
+          "ssim": {
+            "bicubic_value": 0.8512061238288879,
+            "sen2sr_value": 0.8580988645553589,
+            "absolute_change": 0.006892740726470947,
+            "relative_change": 0.008097616468577647,
+            "higher_is_better": true
+          },
+          "rmse": {
+            "bicubic_value": 0.0218690183084104,
+            "sen2sr_value": 0.021736888129672567,
+            "absolute_change": -0.00013213017873783123,
+            "relative_change": -0.00604188888931592,
+            "higher_is_better": false
+          },
+          "sam_degrees": {
+            "bicubic_value": 1.8913800716400146,
+            "sen2sr_value": 2.094015598297119,
+            "absolute_change": 0.2026355266571045,
+            "relative_change": 0.10713633377843478,
+            "higher_is_better": false
+          },
+          "ergas": {
+            "bicubic_value": 3.893835405938824,
+            "sen2sr_value": 3.83959692064336,
+            "absolute_change": -0.054238485295464045,
+            "relative_change": -0.013929321514910532,
+            "higher_is_better": false
+          }
+        }
+      },
+      "opensr_test_metrics": {
+        "status": "COMPUTABLE",
+        "reflectance": 0.0014013772597536445,
+        "spectral": 0.38278713822364807,
+        "spatial": 0.0,
+        "synthesis": 0.00322691909968853,
+        "hallucination": 0.04960868880152702,
+        "omission": 0.8600133657455444,
+        "improvement": 0.09037792682647705,
+        "opensr_test_version": "1.3.3",
+        "config_summary": {
+          "device": "cpu",
+          "agg_method": "pixel",
+          "patch_size": null,
+          "border_mask": 16,
+          "rgb_bands": [
+            0,
+            1,
+            2
+          ],
+          "harm_apply_spectral": true,
+          "harm_apply_spatial": true,
+          "clip_model_path": null,
+          "spatial_method": "pcc",
+          "spatial_threshold_distance": 5,
+          "spatial_max_num_keypoints": 500,
+          "reflectance_distance": "l1",
+          "spectral_distance": "sad",
+          "synthesis_distance": "l1",
+          "correctness_distance": "nd",
+          "correctness_norm": "softmin",
+          "im_score": 0.05,
+          "om_score": 0.05,
+          "ha_score": 0.05,
+          "correctness_temperature": 0.25
+        }
+      },
+      "phase3_self_consistency": {
+        "downsample_consistency": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384,
+          "mask_coverage": 1.0,
+          "overall": {
+            "band_name": null,
+            "status": "COMPUTABLE",
+            "valid_pixel_count": 16384,
+            "sample_count": 65536,
+            "mean_abs_error": 0.000957903514319014,
+            "rmse": 0.0013585328303604123,
+            "max_abs_error": 0.012129813432693481,
+            "normalized_rmse": 0.010524716177717977
+          },
+          "per_band": {
+            "B04": {
+              "band_name": "B04",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0010102973128596204,
+              "rmse": 0.001413472342847549,
+              "max_abs_error": 0.010717242956161499,
+              "normalized_rmse": 0.010573423440418027
+            },
+            "B03": {
+              "band_name": "B03",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0008350104883447784,
+              "rmse": 0.001155424860081653,
+              "max_abs_error": 0.00885104387998581,
+              "normalized_rmse": 0.013467182771502136
+            },
+            "B02": {
+              "band_name": "B02",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0006728462502678667,
+              "rmse": 0.0009275466752695512,
+              "max_abs_error": 0.006741821765899658,
+              "normalized_rmse": 0.017705927101616194
+            },
+            "B08": {
+              "band_name": "B08",
+              "status": "COMPUTABLE",
+              "valid_pixel_count": 16384,
+              "sample_count": 16384,
+              "mean_abs_error": 0.0013134600058037904,
+              "rmse": 0.001785830982645067,
+              "max_abs_error": 0.012129813432693481,
+              "normalized_rmse": 0.0073052817965025526
+            }
+          }
+        },
+        "ndvi_comparison": {
+          "index_name": "NDVI",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.0028890134007549147,
+          "rmse": 0.0039526599398884135,
+          "max_abs_discrepancy": 0.029456049858262445
+        },
+        "b08_b04_ratio_comparison": {
+          "index_name": "B08_B04_ratio",
+          "status": "COMPUTABLE",
+          "valid_pixel_count": 16384,
+          "mean_abs_discrepancy": 0.012274613328163514,
+          "rmse": 0.0183622072533351,
+          "max_abs_discrepancy": 0.27181980473163225
+        },
+        "cross_tile": null,
+        "parameters": {
+          "downsample_method": "area_average_pool",
+          "scale_factor": 4,
+          "band_names": [
+            "B04",
+            "B03",
+            "B02",
+            "B08"
+          ],
+          "lr_shape": [
+            4,
+            128,
+            128
+          ],
+          "sr_shape": [
+            4,
+            512,
+            512
+          ],
+          "mask_shape": [
+            128,
+            128
+          ],
+          "mask_coverage": 1.0,
+          "valid_pixel_count": 16384,
+          "total_pixel_count": 16384
+        }
+      },
+      "scientific_framing": "This benchmark evaluates reconstruction against an independently sourced higher-resolution reference dataset (opensr-test, itself built from NAIP/SPOT/Spanish IGN aerial or satellite imagery -- a different sensor, acquisition date, and platform than Sentinel-2). It does NOT establish that the SR output equals a native 2.5m Sentinel-2 observation, because no such native Sentinel-2 measurement exists: Sentinel-2's finest native band resolution is 10 m. Every metric below characterizes agreement with this specific external reference, not a proof of ground-truth accuracy at 2.5 m. Cross-sensor confounds (acquisition-date mismatch, atmospheric/illumination differences, residual co-registration error) apply to every number in group (A) and (B) below; group (C) needs no external reference at all and carries the self-consistency limitations documented in frame/consistency/README.md instead.",
+      "parameters": {
+        "subset": "spot",
+        "sample_index": 8,
+        "roi_id": "ROI_3171",
+        "hr_variant": "HRharm",
+        "scale_factor": 4,
+        "dataset_version": "1.3.3",
+        "l2a_band_order_source": "https://huggingface.co/datasets/isp-uv-es/opensr-test/raw/main/README.md (\"L2A Index\" column of the published band table), HF repo commit e4600b9c74a621adeec047e5f6cc7a2d70a58134, accessed 2026 during Phase 4 development.",
+        "band_names": [
+          "B04",
+          "B03",
+          "B02",
+          "B08"
+        ],
+        "nodata_value": 0.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,317 @@
+{
+  "experiment": "uncertainty (Phase 5) -- stochastic TTA model-stability proxy, NOT calibrated, NOT LAM",
+  "scientific_framing": "This uncertainty estimate measures prediction stability under the selected test-time perturbations. It is a relative model-stability signal and is not a calibrated probability of error, confidence interval, or physically rigorous uncertainty bound. It is distinct from LAM (sen2sr/xai/lam.py): LAM is explainability/sensitivity (gradient-based, answers 'which input pixels matter'); this TTA ensemble dispersion is a stability/uncertainty proxy (forward-pass-based, answers 'how much does the model disagree with itself across equivalent views'). This does not establish that the SR output equals a native 2.5m Sentinel-2 observation -- no such native Sentinel-2 measurement exists.",
+  "date_time_utc": "2026-09-10T15:08:47Z",
+  "git_commit": "8e21bb669bcc6e8eb953a1fb24dfc5bb59dc18a4",
+  "model": {
+    "name": "SEN2SRLite/NonReference_RGBN_x4",
+    "artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+    "weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN"
+  },
+  "input_scene_identity": {
+    "coordinates": {
+      "lat": 39.49152740347753,
+      "lon": -0.4308725142800361
+    },
+    "scene_date_window": {
+      "start": "2023-01-15",
+      "end": "2023-01-16"
+    },
+    "scene_time_index": 0,
+    "scene_timestamp": "2023-01-15T10:54:11.024000000",
+    "bands": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ],
+    "input_resolution_m": 10.0,
+    "input_geospatial_metadata": {
+      "crs": "EPSG:32630",
+      "transform": [
+        10.0,
+        0.0,
+        720285.0,
+        0.0,
+        -10.0,
+        4375125.0
+      ],
+      "bounds": [
+        720285.0,
+        4373845.0,
+        721565.0,
+        4375125.0
+      ]
+    }
+  },
+  "input_tensor_shape": [
+    4,
+    128,
+    128
+  ],
+  "output_tensor_shape": [
+    4,
+    512,
+    512
+  ],
+  "primary_ensemble": {
+    "n": 6,
+    "transform_names": [
+      "identity",
+      "hflip",
+      "vflip",
+      "rot90",
+      "rot180",
+      "rot270"
+    ],
+    "seed": 42,
+    "total_seconds": 0.3193843364715576,
+    "scalar_summary": 0.0011742570058385082,
+    "scalar_summary_definition": "Mean per-pixel standard deviation across the TTA ensemble, averaged over bands. A relative model-stability proxy, not a calibrated confidence value.",
+    "overall_distribution": {
+      "mean": 0.0011742570058385082,
+      "median": 0.0009934843983501196,
+      "std": 0.0007487089690760612,
+      "p90": 0.0020396666601300243,
+      "p95": 0.0025257432134822007,
+      "min": 0.00010449731780681759,
+      "max": 0.021818019449710846,
+      "n_pixels": 262144
+    },
+    "per_band_distribution": {
+      "B04": {
+        "mean": 0.0013484335506026707,
+        "median": 0.0011075045331381261,
+        "std": 0.0009706913308765452,
+        "p90": 0.00246874641161412,
+        "p95": 0.003119606175459918,
+        "min": 2.641881837917026e-05,
+        "max": 0.030330223962664604,
+        "n_pixels": 262144
+      },
+      "B03": {
+        "mean": 0.0011541497461409755,
+        "median": 0.0009546113724354655,
+        "std": 0.0008181229311480707,
+        "p90": 0.0020909377839416266,
+        "p95": 0.0026300893514417073,
+        "min": 3.291474058642052e-05,
+        "max": 0.02553645148873329,
+        "n_pixels": 262144
+      },
+      "B02": {
+        "mean": 0.0010557765675693748,
+        "median": 0.0008741838682908565,
+        "std": 0.0007485851396764591,
+        "p90": 0.0019127088016830385,
+        "p95": 0.0024088745587505372,
+        "min": 2.640225284267217e-05,
+        "max": 0.02180946059525013,
+        "n_pixels": 262144
+      },
+      "B08": {
+        "mean": 0.0011386681589174094,
+        "median": 0.0009795513469725847,
+        "std": 0.0007087442106014066,
+        "p90": 0.0019918694160878663,
+        "p95": 0.0024299387354403713,
+        "min": 2.4243237930932082e-05,
+        "max": 0.015961840748786926,
+        "n_pixels": 262144
+      }
+    },
+    "per_transform_disagreement": [
+      {
+        "transform_name": "identity",
+        "inference_seconds": 0.14522862434387207,
+        "mean_abs_deviation_from_ensemble_mean": 0.0009811221389099956
+      },
+      {
+        "transform_name": "hflip",
+        "inference_seconds": 0.012229681015014648,
+        "mean_abs_deviation_from_ensemble_mean": 0.0009213857119902968
+      },
+      {
+        "transform_name": "vflip",
+        "inference_seconds": 0.00941324234008789,
+        "mean_abs_deviation_from_ensemble_mean": 0.0009274524636566639
+      },
+      {
+        "transform_name": "rot90",
+        "inference_seconds": 0.009235143661499023,
+        "mean_abs_deviation_from_ensemble_mean": 0.0010570628801360726
+      },
+      {
+        "transform_name": "rot180",
+        "inference_seconds": 0.008606433868408203,
+        "mean_abs_deviation_from_ensemble_mean": 0.0009832754731178284
+      },
+      {
+        "transform_name": "rot270",
+        "inference_seconds": 0.009798526763916016,
+        "mean_abs_deviation_from_ensemble_mean": 0.0010495438473299146
+      }
+    ]
+  },
+  "statistics_definitions": {
+    "mean_prediction": "arithmetic mean across the N (de-transformed) ensemble predictions, per pixel/band",
+    "variance_prediction": "POPULATION variance (divide by N, not N-1) across the N ensemble predictions, per pixel/band",
+    "std_prediction": "sqrt(variance_prediction)",
+    "scalar_summary": "Mean per-pixel standard deviation across the TTA ensemble, averaged over bands. A relative model-stability proxy, not a calibrated confidence value.",
+    "overall_distribution": "distribution (mean/median/std/p90/p95/min/max) of the band-averaged per-pixel std map",
+    "per_band_distribution": "same distribution statistics, computed separately for each band's own std map",
+    "visualization_normalization": "2nd-98th percentile clip and rescale to [0,1], DISPLAY ONLY -- never used in any statistic above"
+  },
+  "n_sweep": [
+    {
+      "n": 1,
+      "transform_names": [
+        "identity"
+      ],
+      "scalar_summary": 0.0,
+      "overall_distribution": {
+        "mean": 0.0,
+        "median": 0.0,
+        "std": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "n_pixels": 262144
+      },
+      "total_seconds": 0.024001121520996094
+    },
+    {
+      "n": 4,
+      "transform_names": [
+        "identity",
+        "hflip",
+        "vflip",
+        "rot90"
+      ],
+      "scalar_summary": 0.0010654395852189302,
+      "overall_distribution": {
+        "mean": 0.0010654395852189302,
+        "median": 0.0008890885219443589,
+        "std": 0.0007239811501945524,
+        "p90": 0.0018851129221729936,
+        "p95": 0.0023603220819495585,
+        "min": 7.63466814532876e-05,
+        "max": 0.023977765813469887,
+        "n_pixels": 262144
+      },
+      "total_seconds": 0.0928041934967041
+    },
+    {
+      "n": 8,
+      "transform_names": [
+        "identity",
+        "hflip",
+        "vflip",
+        "rot90",
+        "rot180",
+        "rot270",
+        "identity",
+        "hflip"
+      ],
+      "scalar_summary": 0.0011448605174388948,
+      "overall_distribution": {
+        "mean": 0.0011448605174388948,
+        "median": 0.0009690123260952532,
+        "std": 0.0007340225023589847,
+        "p90": 0.001984421559609473,
+        "p95": 0.00246297395788133,
+        "min": 9.921268792822957e-05,
+        "max": 0.02314172498881817,
+        "n_pixels": 262144
+      },
+      "total_seconds": 0.13628697395324707
+    },
+    {
+      "n": 16,
+      "transform_names": [
+        "identity",
+        "hflip",
+        "vflip",
+        "rot90",
+        "rot180",
+        "rot270",
+        "identity",
+        "hflip",
+        "vflip",
+        "rot90",
+        "rot180",
+        "rot270",
+        "identity",
+        "hflip",
+        "vflip",
+        "rot90"
+      ],
+      "scalar_summary": 0.001165669958673038,
+      "overall_distribution": {
+        "mean": 0.001165669958673038,
+        "median": 0.0009863501763902605,
+        "std": 0.0007448471159678164,
+        "p90": 0.0020245835650712254,
+        "p95": 0.002509148744866251,
+        "min": 9.964188939193264e-05,
+        "max": 0.022509366273880005,
+        "n_pixels": 262144
+      },
+      "total_seconds": 0.23846817016601562
+    }
+  ],
+  "output_geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      2.5,
+      0.0,
+      720285.0,
+      0.0,
+      -2.5,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ],
+    "resolution_m": 2.5,
+    "width": 512,
+    "height": 512,
+    "band_names": [
+      "B04",
+      "B03",
+      "B02",
+      "B08"
+    ]
+  },
+  "uncertainty_raster_band_names": [
+    "B04_std",
+    "B03_std",
+    "B02_std",
+    "B08_std",
+    "overall_std"
+  ],
+  "environment": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "peak_gpu_memory_mib": 100.7,
+    "python_version": "3.11.9",
+    "torch_version": "2.14.0+cu130",
+    "cuda_available": true
+  },
+  "timestamps": {
+    "run_start_utc": "2026-09-10T15:08:47Z",
+    "run_end_utc": "2026-09-10T15:08:59Z"
+  },
+  "caveats": [
+    "Relative, architecture-conditioned model-stability proxy -- not a calibrated probability of error.",
+    "Not a confidence interval and not a physically rigorous uncertainty bound.",
+    "Distinct from LAM (explainability/sensitivity); this is a stability/uncertainty proxy.",
+    "The 2.5 m pixel grid is a statistical inference, not a native 2.5 m Sentinel-2 observation.",
+    "N>6 in the N-sweep necessarily repeats the 6 default geometric transforms cyclically.",
+    "No numeric 'high uncertainty' threshold is applied anywhere in this report."
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "experiment": "baseline-preprocessing (Phase 1)",
+  "compares_against": "/home/zangetsu/Documents/Projects/FRAME/experiments/baseline",
+  "model_name": "SEN2SRLite/NonReference_RGBN_x4",
+  "model_artifact_source": "https://huggingface.co/tacofoundation/sen2sr/resolve/main/SEN2SRLite/NonReference_RGBN_x4/mlm.json",
+  "model_weights_cache_dir": "/home/zangetsu/.cache/sen2sr_baseline/SEN2SRLite_RGBN",
+  "coordinates": {
+    "lat": 39.49152740347753,
+    "lon": -0.4308725142800361
+  },
+  "scene_date_window": {
+    "start": "2023-01-15",
+    "end": "2023-01-16"
+  },
+  "scene_time_index": 0,
+  "scene_timestamp": "2023-01-15T10:54:11.024000000",
+  "bands": [
+    "B04",
+    "B03",
+    "B02",
+    "B08"
+  ],
+  "input_resolution_m": 10.0,
+  "geospatial_metadata": {
+    "crs": "EPSG:32630",
+    "transform": [
+      10.0,
+      0.0,
+      720285.0,
+      0.0,
+      -10.0,
+      4375125.0
+    ],
+    "bounds": [
+      720285.0,
+      4373845.0,
+      721565.0,
+      4375125.0
+    ]
+  },
+  "preprocessing_mask_coverage": {
+    "in_order": 1.0,
+    "scrambled": 1.0
+  },
+  "output_shape": [
+    4,
+    512,
+    512
+  ],
+  "inference_seconds": 0.1907,
+  "comparisons": [
+    {
+      "name": "in_order_input_vs_baseline0_input",
+      "shapes_match": true,
+      "atol": 1e-05,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "numerically_equivalent": true
+    },
+    {
+      "name": "scrambled_input_vs_baseline0_input",
+      "shapes_match": true,
+      "atol": 1e-05,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "numerically_equivalent": true
+    },
+    {
+      "name": "in_order_input_vs_scrambled_input",
+      "shapes_match": true,
+      "atol": 1e-05,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "numerically_equivalent": true
+    },
+    {
+      "name": "our_sr_output_vs_baseline0_sr_output",
+      "shapes_match": true,
+      "atol": 0.0001,
+      "max_abs_diff": 0.0,
+      "mean_abs_diff": 0.0,
+      "numerically_equivalent": true
+    }
+  ],
+  "all_numerically_equivalent": true,
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "python_version": "3.11.9",
+  "torch_version": "2.14.0+cu130",
+  "cuda_available": true
+}

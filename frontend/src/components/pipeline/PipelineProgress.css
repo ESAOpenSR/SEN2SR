@@ -1,0 +1,104 @@
+.pipeline-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.pipeline-progress__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pipeline-progress__step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  color: var(--text-tertiary);
+}
+
+.pipeline-progress__pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-disabled);
+  border: 1px solid transparent;
+}
+
+.pipeline-progress__step--active .pipeline-progress__pip {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+  animation: pip-pulse 1.4s ease-in-out infinite;
+}
+.pipeline-progress__step--active .pipeline-progress__step-label {
+  color: var(--accent-strong);
+}
+
+.pipeline-progress__step--done .pipeline-progress__pip {
+  background: var(--success);
+}
+.pipeline-progress__step--done .pipeline-progress__step-label {
+  color: var(--text-primary);
+}
+
+.pipeline-progress__step--error .pipeline-progress__pip {
+  background: var(--error);
+}
+.pipeline-progress__step--error .pipeline-progress__step-label {
+  color: var(--error);
+}
+
+@keyframes pip-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.pipeline-progress__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.pipeline-progress__note {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  max-width: 56ch;
+}
+
+.pipeline-progress__run-button {
+  flex-shrink: 0;
+  background: var(--accent);
+  color: #06131a;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 22px;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 120ms ease, opacity 120ms ease;
+}
+
+.pipeline-progress__run-button:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.pipeline-progress__run-button:disabled {
+  background: var(--surface-raised);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
