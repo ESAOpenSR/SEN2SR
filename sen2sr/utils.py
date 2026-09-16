@@ -78,7 +78,7 @@ def predict_large(
     for index, point in enumerate(tqdm(nruns)):        
         
         # Read a block of the image        
-        Xchunk = X[:, point[1] : (point[1] + 128), point[0] : (point[0] + 128)]
+        Xchunk = X[:, point[0] : (point[0] + 128), point[1] : (point[1] + 128)]
         
         # Predict the SR
         result = model(Xchunk[None]).squeeze(0)
@@ -87,7 +87,7 @@ def predict_large(
         if index == 0:
             res_n = result.shape[1] // 128
             output = torch.zeros(
-                (result.shape[0], X.shape[1] * res_n, X.shape[1] * res_n),
+                (result.shape[0], X.shape[1] * res_n, X.shape[2] * res_n),
                 dtype=result.dtype,
                 device="cpu",
             )
@@ -96,12 +96,12 @@ def predict_large(
         # Define the offset in the output space
         # If the point is at the border, the offset is 0 
         # otherwise consider the overlap
-        offset_x = point[0] * res_n + overlap * res_n // 2
-        offset_y = point[1] * res_n + overlap * res_n // 2
+        offset_y = point[0] * res_n + overlap * res_n // 2
+        offset_x = point[1] * res_n + overlap * res_n // 2
         if point[0] == 0:
-            offset_x = 0
+            offset_y = 0
         if point[1] == 0:
-            offset_y = 0        
+            offset_x = 0        
             
         
         
@@ -119,7 +119,7 @@ def predict_large(
         if offset_x == 0: # Initial border
             length_x = 128 * res_n - skip
             result = result[:, :, :length_x]
-        elif (offset_x + 128) == X.shape[1]:
+        elif (offset_x + 128) == X.shape[2]:
             length_x = 128 * res_n
             result = result[:, :, :length_x]
         else:
@@ -131,7 +131,7 @@ def predict_large(
         if offset_y == 0:            
             length_y = 128 * res_n - skip
             result = result[:, :length_y, :]            
-        elif (offset_y + 128) == X.shape[2]:
+        elif (offset_y + 128) == X.shape[1]:
             length_y = 128 * res_n
             result = result[:, :length_y, :]            
         else:
