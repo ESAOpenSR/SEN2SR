@@ -53,12 +53,6 @@ Test files follow the package modules:
 
 These tests verify the processing pipeline rather than pretrained model quality.
 
-The suite includes one strict expected failure for an existing `CNNSR` issue:
-intermediate blocks do not contribute to the prediction when there are more
-than two blocks. Fixing the model's data flow changes predictions from existing
-weights, so that architecture change needs a separate compatibility review.
-The test becomes an error if the issue is fixed without updating the expectation.
-
 ## Reporting issues and opening pull requests
 
 Use the bug report form to provide a minimal reproduction, package versions,

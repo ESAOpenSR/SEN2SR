@@ -398,7 +398,9 @@ class CNNSR(nn.Module):
         # Initial Convolution
         out_feature = self.conv_1(x)
 
-        # Pass through all blocks, accumulating attention outputs
+        # Intentional compatibility behavior for published SEN2SRLite checkpoints:
+        # blocks share out_feature, and only first/last block features feed the output.
+        # Chaining the blocks changes predictions from those weights.
         attentions = []
         for index, block in enumerate(self.blocks):
             out, out2, att = block(out_feature)

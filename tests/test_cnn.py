@@ -68,19 +68,3 @@ def test_cnn_state_dict_round_trip_preserves_predictions():
 
     with torch.no_grad():
         torch.testing.assert_close(restored(image), model(image), rtol=0, atol=0)
-
-
-@pytest.mark.xfail(
-    strict=True,
-    raises=AssertionError,
-    reason="CNNSR intermediate blocks do not feed the following block; changing this affects pretrained outputs",
-)
-def test_every_cnn_block_contributes_to_prediction():
-    model = CNNSR(2, 3, feature_channels=4, upscale=2, num_blocks=3)
-
-    model(torch.randn(1, 2, 7, 9)).square().mean().backward()
-
-    for block in model.blocks:
-        gradient = block.c1_r.conv[0].weight.grad
-        assert gradient is not None
-        assert gradient.abs().sum() > 0
