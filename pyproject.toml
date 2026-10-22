@@ -1,20 +1,33 @@
 [tool.poetry]
 name = "sen2sr"
-version = "0.8.5"
+version = "0.8.6"
 description = "A Python package to super-resolve Sentinel-2 satellite imagery up to 2.5 meters."
 authors = ["Cesar Aybar <cesar.aybar@uv.es>", "Julio Contreras <julio.contreras@uv.es>"]
+license = "CC0-1.0"
 repository = "https://github.com/ESAOpenSR/sen2sr"
 documentation = "https://esaopensr.github.io/sen2sr/"
 readme = "README.md"
 packages = [
   {include = "sen2sr"},
 ]
+include = [
+  {path = "CHANGELOG.md", format = "sdist"},
+  {path = "CITATION.cff", format = "sdist"},
+  {path = "CONTRIBUTING.md", format = "sdist"},
+  {path = "tests", format = "sdist"},
+]
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/ESAOpenSR/SEN2SR/issues"
+"Changelog" = "https://github.com/ESAOpenSR/SEN2SR/blob/main/CHANGELOG.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
 tqdm = ">=4.67.1"
 numpy = ">=2.0.2"
 einops = ">=0.8.1"
+timm = ">=1.0.15"
+torchvision = ">=0.21"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -31,7 +44,7 @@ mkdocs-material = "^9.2.7"
 mkdocstrings = {extras = ["python"], version = "^0.26.1"}
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0,<3.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
@@ -49,7 +62,7 @@ show_error_codes = "True"
 testpaths = ["tests"]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 line-length = 120
 fix = true
 

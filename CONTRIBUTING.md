@@ -83,3 +83,27 @@ smaller images that required follow-up fixes. Run just these with:
 ```bash
 OMP_NUM_THREADS=1 python -m pytest tests/test_predict_large.py -q
 ```
+
+## Publishing a release
+
+The version in `pyproject.toml` and notes in `CHANGELOG.md` must be ready before
+releasing. Merge `dev` into `main` with a merge commit to retain contributor
+authorship, then publish a GitHub release from `main` with a matching tag, such as
+`v0.8.6`. The `publish.yml` workflow builds the source archive and wheel, validates
+them, tests the installed wheel on Python 3.10 and 3.12, then uploads the same
+artifacts to PyPI. Drafts, prereleases, and ordinary pushes do not publish.
+
+Before the first release, the existing PyPI project owner must add a
+[Trusted Publisher](https://docs.pypi.org/trusted-publishers/adding-a-publisher/)
+on the `sen2sr` project's Publishing page with these exact values:
+
+- Owner: `ESAOpenSR`
+- Repository: `SEN2SR`
+- Workflow filename: `publish.yml`
+- Environment: `pypi`
+
+Create the matching `pypi` environment in the GitHub repository settings. No PyPI
+password or API token is needed. The workflow must be included in the commit
+being released. Each release needs a new version; PyPI does not replace existing
+versions. A failed upload can be retried from GitHub Actions after fixing the
+publisher configuration, provided that version has not already been uploaded.

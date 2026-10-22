@@ -11,8 +11,8 @@
 <a href='https://pypi.python.org/pypi/sen2sr'>
     <img src='https://img.shields.io/pypi/v/sen2sr.svg' alt='PyPI' />
 </a>
-<a href="https://opensource.org/licenses/MIT" target="_blank">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
+<a href="https://github.com/ESAOpenSR/SEN2SR/blob/main/LICENSE" target="_blank">
+    <img src="https://img.shields.io/badge/License-CC0--1.0-blue.svg" alt="License">
 </a>
 <a href="https://github.com/psf/black" target="_blank">
     <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Black">
@@ -34,7 +34,7 @@
 
 **PyPI**: [https://pypi.org/project/sen2sr/](https://pypi.org/project/sen2sr/) 🛠️
 
-**Preprint**: [https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5247739](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5247739) 📄
+**Paper**: [https://www.sciencedirect.com/science/article/pii/S0034425725006261](https://www.sciencedirect.com/science/article/pii/S0034425725006261) 📄
 
 ---
 
@@ -47,6 +47,7 @@
 - [**From 20m Sentinel-2 bands to 10m**](#from-20m-sentinel-2-bands-to-10m)
 - [**Predict on large images**](#predict-on-large-images)
 - [**Estimate the Local Attention Map**](#estimate-the-local-attention-map)
+- [**Citation**](#citation)
 
 ## **Overview**
 
@@ -149,7 +150,7 @@ superX = model(X[None]).squeeze(0)
 ```
 
 <p align="center">
-  <img src="assets/srimg01.png" width="100%">
+  <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg01.png" width="100%">
 </p>
 
 
@@ -198,7 +199,7 @@ superX = model(X[None]).squeeze(0)
 ```
 
 <p align="center">
-  <img src="assets/srimg02.png" width="100%">
+  <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg02.png" width="100%">
 </p>
 
 
@@ -244,7 +245,7 @@ superX = model(X[None]).squeeze(0)
 ```
 
 <p align="center">
-  <img src="assets/srimg03.png" width="100%">
+  <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg03.png" width="100%">
 </p>
 
 
@@ -297,7 +298,7 @@ superX = sen2sr.predict_large(
 ```
 
 <p align="center">
-  <img src="assets/srimg05.png" width="95%">
+  <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg05.png" width="95%">
 </p>
 
 
@@ -364,6 +365,23 @@ plt.show()
 ```
 
 <p align="center">
-  <img src="assets/srimg04.png" width="95%">
+  <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg04.png" width="95%">
 </p>
 
+## Citation
+
+If you use SEN2SR in your research, please cite our
+[paper](https://www.sciencedirect.com/science/article/pii/S0034425725006261):
+
+```bibtex
+@article{aybar2026sen2sr,
+  title = {A radiometrically and spatially consistent super-resolution framework for {Sentinel-2}},
+  author = {Aybar, Cesar and Contreras, Julio and Donike, Simon and Portal{\'e}s-Juli{\`a}, Enrique and Mateo-Garc{\'i}a, Gonzalo and G{\'o}mez-Chova, Luis},
+  journal = {Remote Sensing of Environment},
+  volume = {334},
+  pages = {115222},
+  year = {2026},
+  doi = {10.1016/j.rse.2025.115222},
+  url = {https://www.sciencedirect.com/science/article/pii/S0034425725006261}
+}
+```
