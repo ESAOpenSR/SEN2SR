@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: "If you use SEN2SR in your research, please cite the paper below."
+title: SEN2SR
+type: software
+authors:
+  - family-names: Aybar
+    given-names: Cesar
+  - family-names: Contreras
+    given-names: Julio
+  - family-names: Donike
+    given-names: Simon
+  - family-names: Portalés-Julià
+    given-names: Enrique
+  - family-names: Mateo-García
+    given-names: Gonzalo
+  - family-names: Gómez-Chova
+    given-names: Luis
+repository-code: "https://github.com/ESAOpenSR/SEN2SR"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Aybar
+      given-names: Cesar
+    - family-names: Contreras
+      given-names: Julio
+    - family-names: Donike
+      given-names: Simon
+    - family-names: Portalés-Julià
+      given-names: Enrique
+    - family-names: Mateo-García
+      given-names: Gonzalo
+    - family-names: Gómez-Chova
+      given-names: Luis
+  title: "A radiometrically and spatially consistent super-resolution framework for Sentinel-2"
+  journal: Remote Sensing of Environment
+  volume: "334"
+  start: "115222"
+  year: 2026
+  date-published: 2026-03-01
+  doi: 10.1016/j.rse.2025.115222
+  url: "https://www.sciencedirect.com/science/article/pii/S0034425725006261"

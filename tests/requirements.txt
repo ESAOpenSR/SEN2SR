@@ -1,0 +1,6 @@
+# Install CPU-only torch and torchvision first (see CONTRIBUTING.md).
+-e .
+timm==1.0.30
+pytest==7.4.4
+pytest-cov==4.1.0
+ruff==0.17.1

@@ -50,6 +50,7 @@ def vis_saliency_kde(
     datapoint_y, datapoint_x = torch.meshgrid(
         torch.arange(map.shape[0], dtype=torch.float32),
         torch.arange(map.shape[1], dtype=torch.float32),
+        indexing="ij",
     )
     pixels = torch.vstack([datapoint_x.flatten(), datapoint_y.flatten()])
 
@@ -68,7 +69,9 @@ def vis_saliency_kde(
 
     # Reshape and normalize KDE output
     Z = kde_values.reshape(map.shape)
-    Z = Z / Z.max()
+    maximum = Z.max()
+    if maximum > 0:
+        Z = Z / maximum
 
     # Reshape to the SR scale
     Z = torch.nn.functional.interpolate(
@@ -98,7 +101,7 @@ def gini(array: Union[np.ndarray, list]) -> float:
 
     """
     # Ensure array is a flattened 1D numpy array
-    array = np.asarray(array).flatten()
+    array = np.asarray(array, dtype=np.float64).flatten()
 
     # Shift values if there are any negative elements, as Gini requires non-negative values
     if np.amin(array) < 0:

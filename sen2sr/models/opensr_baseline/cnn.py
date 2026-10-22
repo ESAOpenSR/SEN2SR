@@ -193,7 +193,8 @@ class Conv3XC(nn.Module):
             bias=bias,
         )
         self.eval_conv.weight.requires_grad = False
-        self.eval_conv.bias.requires_grad = False
+        if self.eval_conv.bias is not None:
+            self.eval_conv.bias.requires_grad = False
         self.update_params()
 
     def update_params(self):
@@ -201,11 +202,11 @@ class Conv3XC(nn.Module):
         Updates the parameters for evaluation mode by combining weights from the convolution layers.
         """
         w1 = self.conv[0].weight.data.clone().detach()
-        b1 = self.conv[0].bias.data.clone().detach()
+        b1 = self.conv[0].bias.detach().clone() if self.conv[0].bias is not None else w1.new_zeros(w1.shape[0])
         w2 = self.conv[1].weight.data.clone().detach()
-        b2 = self.conv[1].bias.data.clone().detach()
+        b2 = self.conv[1].bias.detach().clone() if self.conv[1].bias is not None else w2.new_zeros(w2.shape[0])
         w3 = self.conv[2].weight.data.clone().detach()
-        b3 = self.conv[2].bias.data.clone().detach()
+        b3 = self.conv[2].bias.detach().clone() if self.conv[2].bias is not None else w3.new_zeros(w3.shape[0])
 
         w = (
             F.conv2d(w1.flip(2, 3).permute(1, 0, 2, 3), w2, padding=2, stride=1)
@@ -222,7 +223,7 @@ class Conv3XC(nn.Module):
         self.bias_concat = (w3 * b.reshape(1, -1, 1, 1)).sum((1, 2, 3)) + b3
 
         sk_w = self.sk.weight.data.clone().detach()
-        sk_b = self.sk.bias.data.clone().detach()
+        sk_b = self.sk.bias.detach().clone() if self.sk.bias is not None else sk_w.new_zeros(sk_w.shape[0])
         target_kernel_size = 3
 
         H_pixels_to_pad = (target_kernel_size - 1) // 2
@@ -235,7 +236,8 @@ class Conv3XC(nn.Module):
         self.bias_concat = self.bias_concat + sk_b
 
         self.eval_conv.weight.data = self.weight_concat
-        self.eval_conv.bias.data = self.bias_concat
+        if self.eval_conv.bias is not None:
+            self.eval_conv.bias.data = self.bias_concat
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -396,7 +398,9 @@ class CNNSR(nn.Module):
         # Initial Convolution
         out_feature = self.conv_1(x)
 
-        # Pass through all blocks, accumulating attention outputs
+        # Intentional compatibility behavior for published SEN2SRLite checkpoints:
+        # blocks share out_feature, and only first/last block features feed the output.
+        # Chaining the blocks changes predictions from those weights.
         attentions = []
         for index, block in enumerate(self.blocks):
             out, out2, att = block(out_feature)
