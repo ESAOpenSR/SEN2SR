@@ -118,7 +118,7 @@ def create_blur_cube(X: torch.Tensor, scales: list) -> torch.Tensor:
         torch.Tensor: The cube of blurred images.
     """
     scales_int = [float(scale[:-1]) for scale in scales]
-    return torch.stack([down_up(X[None], scale) for scale in scales_int]).squeeze()
+    return torch.stack([down_up(X[None], scale) for scale in scales_int]).squeeze(1)
 
 
 def create_lam_inputs(
@@ -198,9 +198,9 @@ def lam(
 
     # Sum the accumulated gradients across all bands
     lam_results = torch.sum(torch.from_numpy(np.abs(grad_accumulate_list)), dim=0)
-    grad_2d = np.abs(lam_results.sum(axis=0))
+    grad_2d = lam_results.sum(dim=0).abs().numpy()
     grad_max = grad_2d.max()
-    grad_norm = grad_2d / grad_max
+    grad_norm = grad_2d / grad_max if grad_max > 0 else np.zeros_like(grad_2d)
 
     # Estimate gini index
     gini_index = gini(grad_norm.flatten())
@@ -209,12 +209,13 @@ def lam(
     # ratio_img_to_window = (X.shape[1] * model_scale) // window
 
     # KDE estimation
-    kde_map = np.log1p(vis_saliency_kde(grad_norm, scale=scale_factor, bandwidth=1.0))
+    density = vis_saliency_kde(torch.from_numpy(grad_norm), scale=scale_factor, bandwidth=1.0)
+    kde_map = np.log1p(density.cpu().numpy())
     complexity_metric = (1 - gini_index) * 100  # / ratio_img_to_window
 
     # Estimate blurriness sensitivity
     robustness_vector = np.abs(grad_accumulate_list).mean(axis=(1, 2, 3))
-    robustness_metric = np.trapz(robustness_vector)
+    robustness_metric = np.trapezoid(robustness_vector)
 
     # Return the LAM results
     return kde_map, complexity_metric, robustness_metric, robustness_vector

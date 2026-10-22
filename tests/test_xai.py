@@ -7,8 +7,8 @@ import numpy as np
 import pytest
 import torch
 
-from sen2sr.xai.lam import attr_grad, attribution_objective, create_lam_inputs, down_up
-from sen2sr.xai.utils import gini, torch_gaussian_kde
+from sen2sr.xai.lam import attr_grad, attribution_objective, create_blur_cube, create_lam_inputs, down_up, lam
+from sen2sr.xai.utils import gini, torch_gaussian_kde, vis_saliency_kde
 
 
 def test_attribution_objective_passes_window_to_attribution_function():
@@ -69,6 +69,13 @@ def test_gini_is_invariant_to_order_and_does_not_mutate_input():
     np.testing.assert_array_equal(values, original)
 
 
+@pytest.mark.parametrize("values", [[1, 2, 3], np.array([1, 2, 3]), [0, 0, 0]])
+def test_gini_accepts_integer_inputs(values):
+    expected = 0 if np.max(values) == 0 else 2 / 9
+
+    assert gini(values) == pytest.approx(expected, abs=1e-6)
+
+
 def test_gaussian_kde_matches_single_weighted_point():
     point = torch.zeros(2, 1)
     grid = torch.tensor([[0.0, 1.0], [0.0, 0.0]])
@@ -76,3 +83,60 @@ def test_gaussian_kde_matches_single_weighted_point():
     result = torch_gaussian_kde(point, weights=torch.tensor([2.0]), grid=grid, bandwidth=1)
 
     torch.testing.assert_close(result, torch.tensor([2.0, 2 * math.exp(-0.5)]))
+
+
+@pytest.mark.parametrize("channels", [1, 2])
+@pytest.mark.parametrize("scales", [["1x"], ["1x", "2x", "3x"]])
+def test_blur_cube_preserves_scale_and_channel_axes(channels, scales):
+    image = torch.full((channels, 6, 8), 0.5)
+
+    result = create_blur_cube(image, scales)
+
+    torch.testing.assert_close(result, image[None].expand(len(scales), channels, 6, 8))
+
+
+def test_zero_saliency_map_produces_finite_zero_density():
+    result = vis_saliency_kde(torch.zeros(3, 5), scale=2)
+
+    torch.testing.assert_close(result, torch.zeros(6, 10), rtol=0, atol=0)
+
+
+def test_saliency_density_is_invariant_to_positive_weight_scale():
+    saliency = torch.zeros(5, 7)
+    saliency[2, 3] = 1
+
+    torch.testing.assert_close(vis_saliency_kde(saliency), vis_saliency_kde(7 * saliency))
+
+
+@pytest.mark.parametrize("channels", [1, 2])
+def test_lam_end_to_end_produces_finite_maps_and_metrics(channels):
+    image = torch.arange(channels * 6 * 8, dtype=torch.float32).reshape(channels, 6, 8) / 100
+    original = image.clone()
+    model = torch.nn.Upsample(scale_factor=2, mode="nearest")
+
+    density, complexity, robustness, per_scale = lam(image, model, h=2, w=2, window=2, scales=["1x", "2x", "3x"])
+
+    assert isinstance(density, np.ndarray)
+    assert density.shape == (12, 16)
+    assert np.isfinite(density).all()
+    assert np.isfinite(complexity)
+    assert 0 <= complexity <= 100
+    assert np.isfinite(robustness)
+    assert robustness >= 0
+    assert per_scale.shape == (2,)
+    assert np.isfinite(per_scale).all()
+    assert (per_scale >= 0).all()
+    torch.testing.assert_close(image, original)
+
+
+def test_constant_image_has_zero_lam_and_robustness():
+    model = torch.nn.Upsample(scale_factor=2, mode="nearest")
+
+    density, complexity, robustness, per_scale = lam(
+        torch.ones(2, 6, 8), model, h=2, w=2, window=2, scales=["1x", "2x", "3x"]
+    )
+
+    np.testing.assert_array_equal(density, np.zeros((12, 16)))
+    np.testing.assert_array_equal(per_scale, np.zeros(2))
+    assert np.isfinite(complexity)
+    assert robustness == 0
