@@ -253,6 +253,13 @@ superX = model(X[None]).squeeze(0)
 This example demonstrates the use of `SEN2SRLite NonReference_RGBN_x4` for super-resolving large Sentinel-2 RGB+NIR images by chunking the 
 input into smaller overlapping tiles. Although the model is trained to operate on fixed-size 128×128 patches, the `sen2sr.predict_large` utility automatically segments larger inputs into these tiles, applies the model to each tile independently, and then reconstructs the full image. An overlap margin (e.g., 32 pixels) is introduced between tiles to minimize edge artifacts and ensure continuity across tile boundaries.
 
+Inputs use `(channels, height, width)` order. An axis shorter than 128 pixels is
+padded by repeating its edge values for inference, and the prediction is cropped
+back to the original extent at the model's scale. Overlap must be an integer from
+0 through 127. The model must return a batched tensor with a consistent positive
+integer scale on both spatial axes. The assembled output is detached and returned
+on the CPU in `(output_channels, height * scale, width * scale)` order.
+
 ```python
 import mlstac
 import sen2sr
