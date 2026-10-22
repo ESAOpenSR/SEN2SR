@@ -6,6 +6,28 @@ from torch import nn
 from sen2sr.referencex2 import reconstruct_sentinel2_stack, resample_sentinel2_bands, srmodel
 
 
+def test_resampling_preserves_every_native_resolution_pixel():
+    image = torch.arange(2 * 10 * 6 * 8, dtype=torch.float32).reshape(2, 10, 6, 8)
+    original = image.clone()
+
+    result = resample_sentinel2_bands(image)
+
+    torch.testing.assert_close(result[:, -4:], image[:, [0, 1, 2, 6]], rtol=0, atol=0)
+    torch.testing.assert_close(image, original, rtol=0, atol=0)
+
+
+def test_resampling_interpolates_20m_bands_with_known_bilinear_values():
+    coarse = torch.tensor([[0.0, 2.0], [4.0, 6.0]])
+    image = torch.zeros(1, 10, 4, 4)
+    slow_bands = [3, 4, 5, 7, 8, 9]
+    image[:, slow_bands] = coarse.repeat_interleave(2, -2).repeat_interleave(2, -1)
+
+    result = resample_sentinel2_bands(image)
+
+    expected = torch.tensor([[0, 0.5, 1.5, 2], [1, 1.5, 2.5, 3], [3, 3.5, 4.5, 5], [4, 4.5, 5.5, 6]])
+    torch.testing.assert_close(result[:, :6], expected[None, None].expand(1, 6, 4, 4))
+
+
 def test_resampling_preserves_constant_bands_and_groups_them_by_resolution():
     image = torch.arange(10, dtype=torch.float64).reshape(1, 10, 1, 1).expand(2, 10, 6, 8).clone()
     original = image.clone()
