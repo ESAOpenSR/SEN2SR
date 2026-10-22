@@ -63,7 +63,7 @@ def gaussian_filter(shape: Tuple[int, int], cutoff: int) -> torch.Tensor:
     for u in range(rows):
         for v in range(cols):
             distance = (u - crow) ** 2 + (v - ccol) ** 2
-            filter[u, v] = torch.exp(-distance / (2 * (cutoff**2)))    
+            filter[u, v] = torch.exp(torch.tensor(-distance / (2 * (cutoff**2))))
     return filter
 
 
@@ -87,7 +87,7 @@ def sigmoid_filter(
     for u in range(rows):
         for v in range(cols):
             distance = ((u - crow) ** 2 + (v - ccol) ** 2) ** 0.5
-            filter[u, v] = 1 / (1 + torch.exp((distance - cutoff) / sharpness))
+            filter[u, v] = 1 / (1 + torch.exp(torch.tensor((distance - cutoff) / sharpness)))
     return filter
 
 
