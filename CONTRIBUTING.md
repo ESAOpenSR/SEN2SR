@@ -1,59 +1,73 @@
-# **Contributing** 🤝
+# Contributing
 
-We welcome contributions from the community! Every contribution, no matter how small, is appreciated and credited. Here’s how you can get involved:
+Contributions to [SEN2SR](https://github.com/ESAOpenSR/SEN2SR) are welcome.
+Fork the repository, create a branch for your change, and submit a pull request
+against `dev`. Include regression tests for bug fixes and document changes to
+public behavior.
 
-## **How to contribute** 🛠️
+`dev` is the integration branch for testing changes. Merge contributor pull
+requests into `dev` using a merge commit to preserve their original commits and
+authorship. Keep follow-up fixes in separate commits. Once the combined changes
+are tested, open a `dev` to `main` pull request and merge it with a merge commit
+to retain that history.
 
-1. **Fork the repository:** Start by forking the [SuperS2](https://github.com/IPL-UV/supers2) repository to your GitHub account. 🍴
-2. **Clone your fork locally:**
-    ```bash
-    cd <directory_in_which_repo_should_be_created>
-    git clone https://github.com/YOUR_GITHUB_USERNAME/supers2.git
-    cd supers2
-    ```
-3. **Create a branch:** Create a new branch for your feature or bug fix:
-    ```bash
-    git checkout -b name-of-your-bugfix-or-feature
-    ```
-4. **Set up the environment:** 🌱
-   - If you're using `pyenv`, select a Python version:
-     ```bash
-     pyenv local <x.y.z>
-     ```
-   - Install dependencies and activate the environment:
-     ```bash
-     poetry install
-     poetry shell
-     ```
-   - Install pre-commit hooks:
-     ```bash
-     poetry run pre-commit install
-     ```
-5. **Make your changes:** 🖋️ Develop your feature or fix, ensuring you write clear, concise commit messages and include any necessary tests.
-6. **Check your changes:** ✅
-   - Run formatting checks:
-     ```bash
-     make check
-     ```
-   - Run unit tests:
-     ```bash
-     make test
-     ```
-   - Optionally, run tests across different Python versions using tox:
-     ```bash
-     tox
-     ```
-7. **Submit a pull request:** 🚀 Push your branch to GitHub and submit a pull request to the `develop` branch of the SuperS2 repository. Ensure your pull request meets these guidelines:
-   - Include tests.
-   - Update the documentation if your pull request adds functionality.
-   - Provide a detailed description of your changes.
+## Running the tests
 
-## **Types of contributions** 📦
+The tests run on the CPU with synthetic tensors and small PyTorch models.
+They do not need a GPU, pretrained weights, downloaded imagery, or network access
+after installation. CI runs them on Python 3.10 and 3.12.
 
-- **Report bugs:** 🐛
-  - Report bugs by creating an issue on the [SuperS2 GitHub repository](https://github.com/IPL-UV/supers2/issues). Please include your operating system, setup details, and steps to reproduce the bug.
-- **Fix bugs:** 🛠️ Look for issues tagged with "bug" and "help wanted" in the repository to start fixing.
-- **Implement features:** ✨ Contribute by implementing features tagged with "enhancement" and "help wanted."
-- **Write documentation:** 📚 Contribute to the documentation in the official docs, docstrings, or through blog posts and articles.
-- **Submit feedback:** 💬 Propose new features or give feedback by filing an issue on GitHub. 
-  - Use the [SuperS2 GitHub issues page](https://github.com/IPL-UV/supers2/issues) for feedback.
+From the repository root, create an environment and install the test dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r tests/requirements.txt
+```
+
+`timm` and its matching `torchvision` dependency are required by the package's
+import checks, even though these tests do not load a pretrained model. Install
+PyTorch first using the CPU index above to avoid downloading CUDA dependencies.
+
+Run the suite and the formatting checks for the tiling code:
+
+```bash
+OMP_NUM_THREADS=1 HF_HUB_OFFLINE=1 python -m pytest -q
+ruff check --no-fix sen2sr/utils.py tests
+ruff format --check sen2sr/utils.py tests
+```
+
+Test files follow the package modules:
+
+- `test_predict_large.py`: tiling, overlap cropping, small images, scaling, and invalid inputs.
+- `test_utils.py`: tile iteration and boundary alignment.
+- `test_nonreference.py`: non-reference SR wrapper and hard-constraint preparation.
+- `test_referencex2.py`: Sentinel-2 band resampling, reconstruction, and the 2x wrapper.
+- `test_referencex4.py`: the 4x pipeline, band order, and spectral constraint wiring.
+- `test_tricks.py`: frequency filters and hard constraints.
+- `test_xai.py`: attribution objectives, gradients, Gini coefficients, and KDE.
+
+These tests verify the processing pipeline rather than pretrained model quality.
+
+To measure tiling coverage, preload PyTorch and timm before enabling tracing
+(their native imports failed under coverage tracing in the tested environment):
+
+```bash
+OMP_NUM_THREADS=1 HF_HUB_OFFLINE=1 python - <<'PY'
+import torch
+import timm
+import pytest
+
+raise SystemExit(pytest.main(["-q", "--cov=sen2sr.utils", "--cov-report=term-missing"]))
+PY
+```
+
+The cases from [PR #7](https://github.com/ESAOpenSR/SEN2SR/pull/7) are covered by
+ordinary pytest regression tests in `test_predict_large.py`, along with the
+smaller images that required follow-up fixes. Run just these with:
+
+```bash
+OMP_NUM_THREADS=1 python -m pytest tests/test_predict_large.py -q
+```
