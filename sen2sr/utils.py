@@ -116,24 +116,28 @@ def predict_large(
         skip = overlap * res_n // 2
 
         # Work in the X axis
-        if offset_x == 0: # Initial border
+        if offset_x == 0 and point[1] + 128 < X.shape[2]: # Initial border
             length_x = 128 * res_n - skip
             result = result[:, :, :length_x]
         elif (offset_x + 128) == X.shape[2]:
             length_x = 128 * res_n
             result = result[:, :, :length_x]
+        elif offset_x == 0:
+            length_x = 128 * res_n
         else:
             skip = overlap * res_n // 2
             length_x = 128 * res_n - skip
             result = result[:, :, skip:(128 * res_n)]
             
         # Work in the Y axis
-        if offset_y == 0:            
+        if offset_y == 0 and point[0] + 128 < X.shape[1]:            
             length_y = 128 * res_n - skip
             result = result[:, :length_y, :]            
         elif (offset_y + 128) == X.shape[1]:
             length_y = 128 * res_n
-            result = result[:, :length_y, :]            
+            result = result[:, :length_y, :]  
+        elif offset_y == 0:
+            length_y = 128 * res_n          
         else:
             length_y = 128 * res_n - skip
             result = result[:, skip:(128 * res_n), :]
