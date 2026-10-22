@@ -48,10 +48,28 @@ Test files follow the package modules:
 - `test_referencex4.py`: the 4x pipeline, band order, and spectral constraint wiring.
 - `test_tricks.py`: frequency filters and hard constraints.
 - `test_xai.py`: attribution objectives, gradients, Gini coefficients, and KDE.
+- `test_cnn.py`: CNN predictions, gradients, convolution fusion, attention maps, and checkpoint round trips.
+- `test_swin.py`: Swin attention windows, rectangular inputs, gradients, and checkpoint round trips.
 
 These tests verify the processing pipeline rather than pretrained model quality.
 
-To measure tiling coverage, preload PyTorch and timm before enabling tracing
+The suite includes one strict expected failure for an existing `CNNSR` issue:
+intermediate blocks do not contribute to the prediction when there are more
+than two blocks. Fixing the model's data flow changes predictions from existing
+weights, so that architecture change needs a separate compatibility review.
+The test becomes an error if the issue is fixed without updating the expectation.
+
+## Reporting issues and opening pull requests
+
+Use the bug report form to provide a minimal reproduction, package versions,
+and relevant model/tensor details. Use the feature request form to describe the
+problem, proposed behavior, and how the improvement could be verified.
+
+The pull request template asks for the change, related issue, and validation.
+Target `dev` for development changes. GitHub uses these templates from the
+default branch, so they become available after this work reaches `main`.
+
+To measure package coverage, preload PyTorch and timm before enabling tracing
 (their native imports failed under coverage tracing in the tested environment):
 
 ```bash
@@ -60,7 +78,7 @@ import torch
 import timm
 import pytest
 
-raise SystemExit(pytest.main(["-q", "--cov=sen2sr.utils", "--cov-report=term-missing"]))
+raise SystemExit(pytest.main(["-q", "--cov=sen2sr", "--cov-report=term-missing"]))
 PY
 ```
 

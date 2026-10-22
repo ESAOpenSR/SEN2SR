@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose an improvement to SEN2SR.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the use case and current limitation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the desired behavior or API. A short example helps.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or workarounds
+    validations:
+      required: false
+  - type: textarea
+    id: validation
+    attributes:
+      label: How could we verify the improvement?
+      description: Suggest an example, test, or measurable acceptance criterion.
+    validations:
+      required: false
+

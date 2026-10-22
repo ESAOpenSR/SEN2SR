@@ -1,0 +1,54 @@
+name: Bug report
+description: Report a reproducible problem with SEN2SR.
+title: "[Bug] "
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened, and what did you expect?
+      description: Describe the observed and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide a small runnable example. Synthetic tensors are ideal when the issue does not require pretrained weights or imagery.
+      render: python
+      placeholder: |
+        import torch
+        import sen2sr
+
+        # Add the smallest example that reproduces the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include package versions and how you installed SEN2SR.
+      value: |
+        SEN2SR version or commit:
+        Python version:
+        PyTorch / torchvision / timm versions:
+        NumPy version:
+        Operating system:
+        CPU or GPU (GPU model and CUDA version if applicable):
+        Installation command:
+    validations:
+      required: true
+  - type: textarea
+    id: inference
+    attributes:
+      label: Model and tensor details
+      description: For inference issues, include the model variant, input/output shapes, band order, dtype, device, scale, and overlap.
+    validations:
+      required: false
+  - type: textarea
+    id: traceback
+    attributes:
+      label: Traceback or logs
+      render: text
+    validations:
+      required: false
+

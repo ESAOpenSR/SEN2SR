@@ -52,6 +52,8 @@ testpaths = ["tests"]
 target-version = "py39"
 line-length = 120
 fix = true
+
+[tool.ruff.lint]
 select = [
     # flake8-2020
     "YTT",
@@ -102,5 +104,5 @@ branch = true
 source = ["sen2sr"]
 
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
