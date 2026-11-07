@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- Document RGB+NIR model choices for the SEN2SR pipeline, including SEN2SRLite,
+  LDSR-S2, and an OpenSR-SRGAN adapter example.
+
 ## 0.8.6
 
 Changes below are relative to the published 0.8.5 package.

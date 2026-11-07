@@ -45,6 +45,7 @@
 - [**From 10m and 20m Sentinel-2 bands to 2.5m**](#from-10m-and-20m-sentinel-2-bands-to-25m)
 - [**From 10m Sentinel-2 bands to 2.5m**](#from-10m-sentinel-2-bands-to-25m)
 - [**From 20m Sentinel-2 bands to 10m**](#from-20m-sentinel-2-bands-to-10m)
+- [**Combining RGB+NIR models with SEN2SR**](#combining-rgbnir-models-with-sen2sr)
 - [**Predict on large images**](#predict-on-large-images)
 - [**Estimate the Local Attention Map**](#estimate-the-local-attention-map)
 - [**Citation**](#citation)
@@ -247,6 +248,59 @@ superX = model(X[None]).squeeze(0)
 <p align="center">
   <img src="https://raw.githubusercontent.com/ESAOpenSR/SEN2SR/main/assets/srimg03.png" width="100%">
 </p>
+
+
+## Combining RGB+NIR models with SEN2SR
+
+SEN2SR can use different RGB+NIR super-resolution models to guide the enhancement
+of the six red-edge, narrow-NIR, and SWIR bands. The RGB+NIR model provides the
+four 10 m bands at 2.5 m, and SEN2SR combines these with its reference models to
+produce the full ten-band output.
+
+| RGB+NIR model | Approach | Combination example |
+| --- | --- | --- |
+| **SEN2SRLite** | Lightweight CNN | Included in the [ten-band example](#from-10m-and-20m-sentinel-2-bands-to-25m) above. |
+| **[LDSR-S2](https://github.com/ESAOpenSR/opensr-model)** | Latent diffusion | [LDSR-S2 + SEN2SR notebook](https://colab.research.google.com/drive/1NJuyswsquOLMFc_AP93P_5QcZnbNhGuB?usp=sharing). |
+| **[OpenSR-SRGAN](https://github.com/ESAOpenSR/SRGAN)** (`SEN2-SR`) | ESRGAN | Replace the RGB+NIR stage as shown below; see its [model card](https://huggingface.co/simon-donike/SR-GAN/blob/main/models/sen2-sr/v1/README.md) for training and evaluation details. |
+
+The RGB+NIR stage (`model.sr_model`) takes normalized reflectance tensors of shape
+`(B, 4, H, W)` in **B04, B03, B02, B08** order and must return
+`(B, 4, 4*H, 4*W)` in the same band order, units, and device. For example, this
+adapter uses SRGAN's `predict_step` interface, converting to DN and back while
+keeping its configured postprocessing.
+
+Install `opensr-srgan==1.1.0` in a Python 3.12–3.14 environment for this example.
+Reuse the SEN2SRLite download and normalized **ten-band** `X` from the
+[10 m and 20 m example](#from-10m-and-20m-sentinel-2-bands-to-25m):
+
+```python
+import mlstac
+import torch
+from opensr_srgan import load_inference_model
+
+
+class SRGANRGBN(torch.nn.Module):
+    def __init__(self, srgan):
+        super().__init__()
+        self.srgan = srgan
+
+    def forward(self, x):
+        sr_dn = self.srgan.predict_step(x * 10_000)
+        return sr_dn.to(device=x.device, dtype=x.dtype) / 10_000
+
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = mlstac.load("model/SEN2SRLite").compiled_model(device=device)
+model.sr_model = SRGANRGBN(load_inference_model("SEN2-SR", map_location="cpu"))
+model = model.to(device).eval()
+
+with torch.inference_mode():
+    superX = model(X[None].to(device)).squeeze(0)  # (10, 4 * H, 4 * W)
+```
+
+The pipeline selects the RGB+NIR inputs and restores the ten-band output order
+`[B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12]`. For large scenes, use
+[`sen2sr.predict_large`](#predict-on-large-images) with the combined model.
 
 
 ## **Predict on large images**
